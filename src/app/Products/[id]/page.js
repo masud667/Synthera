@@ -1,13 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useState, use } from "react";
 import products from "@/../public/product.json";
+import useAddToCart from "@/app/hooks/useAddToCart";
+import { Toaster } from "react-hot-toast";
 
-export default function ProductDetails({ params }) {
+export default function ProductDetails({ params: paramsPromise }) {
+  const params = use(paramsPromise); // unwrap the promise
   const { id } = params;
+
   const product = products.find((p) => p.productId.toString() === id);
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || "");
   const [quantity, setQuantity] = useState(1);
+
+  const { addToCart } = useAddToCart();
 
   if (!product) {
     return <h1 className="p-6">Product not found</h1>;
@@ -20,9 +26,10 @@ export default function ProductDetails({ params }) {
 
   return (
     <div className="p-4 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <Toaster position="top-right" />
+
       {/* Left: Image + Thumbnails */}
       <div className="flex flex-col items-center">
-        {/* Main Thumbnail */}
         <div className="w-full md:w-[450px] h-[450px] bg-[#E1E4E9] rounded-md p-3 flex items-center justify-center">
           <img
             src={product.thumbnail}
@@ -31,7 +38,6 @@ export default function ProductDetails({ params }) {
           />
         </div>
 
-        {/* Sub-images */}
         <div className="grid grid-cols-4 gap-3 mt-6 w-full md:w-[450px]">
           {product.images.map((subImg, index) => (
             <div
@@ -52,6 +58,7 @@ export default function ProductDetails({ params }) {
       <div>
         <h1 className="text-2xl font-bold">{product.title}</h1>
         <p className="text-gray-500">{product.brand}</p>
+
         <div className="flex items-center gap-2 mt-2">
           <span className="text-xl font-semibold text-blue-600">
             ${product.discountPrice}
@@ -120,11 +127,7 @@ export default function ProductDetails({ params }) {
         <div className="mt-6 flex gap-4 flex-wrap">
           <button
             className="bg-blue-600 text-white px-5 py-2 rounded"
-            onClick={() =>
-              alert(
-                `Added ${quantity} x ${product.title} (Size: ${selectedSize}) to cart`
-              )
-            }
+            onClick={() => addToCart(product, selectedSize, quantity)}
           >
             Add to Cart
           </button>

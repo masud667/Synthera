@@ -156,7 +156,7 @@ export default function ProductCard({ product }) {
 
                 {/* Add to Cart */}
                 <button
-                  onClick={() => addToCart(product, selectedSize, quantity)} // <- call the hook function
+                  onClick={() => addToCart(product, selectedSize, quantity)} 
                   className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
                 >
                   Add to Cart
