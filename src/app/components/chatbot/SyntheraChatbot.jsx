@@ -11,7 +11,7 @@ export default function SyntheraChatbot() {
     {
       id: 1,
       role: "bot",
-      text: "Hi — I'm Synthera AI. This chat UI is a demo (non-functional).",
+      text: "Hi — I'm Synthera AI.",
     },
     {
       id: 2,
@@ -65,7 +65,7 @@ export default function SyntheraChatbot() {
     <div className="fixed right-6 bottom-6 z-50">
       {/* Chat panel */}
       {open && (
-        <div className="w-80 md:w-96 h-[420px] bg-white dark:bg-gray-900 shadow-xl rounded-2xl flex flex-col border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="w-80 md:w-96 h-[420px] bg-gray-900 shadow-xl rounded-2xl flex flex-col border border-gray-700 overflow-hidden">
           <header className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800">
             <div className="flex items-center gap-3">
               <div className="border rounded-full p-2 border-primary">
@@ -74,7 +74,7 @@ export default function SyntheraChatbot() {
               <div>
                 <div className="text-sm font-semibold">Synthera AI</div>
                 <div className="text-xs text-gray-500">
-                  Shopping assistant (demo)
+                  Shopping assistant 
                 </div>
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function SyntheraChatbot() {
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close chat"
-                className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="p-1 cursor-pointer rounded-md text-white text-lg"
               >
                 ✕
               </button>
@@ -113,20 +113,20 @@ export default function SyntheraChatbot() {
 
           <form
             onSubmit={handleSubmit}
-            className="px-3 py-3 border-t border-gray-100 dark:border-gray-800"
+            className="px-3 py-3 border-t border-gray-800"
           >
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 aria-label="Type a message"
-                className="flex-1 bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-300"
-                placeholder="Ask Synthera (demo only)..."
+                className="flex-1 placeholder:text-white  bg-gray-800  px-3 py-2 rounded-lg border border-gray-700 focus:outline-none  focus:border-yellow-300"
+                placeholder="Ask Synthera . . ."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />
               <button
                 type="submit"
-                className="px-3 py-2 bg-primary text-white rounded-lg hover:opacity-95 disabled:opacity-60"
+                className="px-3 cursor-pointer py-2 bg-primary text-white rounded-lg hover:opacity-95 disabled:opacity-60"
               >
                 Send
               </button>

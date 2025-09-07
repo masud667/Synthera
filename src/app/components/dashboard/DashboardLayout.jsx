@@ -9,26 +9,30 @@ import AllProducts from "./seller/AllProducts";
 import TotalSell from "./seller/TotalSell";
 import SellerProfile from "./seller/SellerProfile";
 import UserProfile from "./user/UserProfile";
+import AdminProfile from "./admin/AdminProfile";
+import SellerRequest from "./admin/SellerRequest";
+import TotalSellers from "./admin/TotalSellers";
+import TotalUsers from "./admin/TotalUsers";
 
 export default function DashboardLayout() {
   const [activeRoute, setActiveRoute] = useState("profile");
-  const [role] = useState("user");
+  const [role] = useState("admin");
 
   const renderContent = () => {
-    if (role === "user") {
+    if (role === "admin") {
       switch (activeRoute) {
         case "profile":
-          return <UserProfile />;
-        case "all-cart":
-          return <AllCart />;
-        case "ordered-item":
-          return <OrderedItems />;
-        case "pending-delivery":
-          return <PendingDelivery />;
+          return <AdminProfile />;
+        case "seller-request":
+          return <SellerRequest />;
+        case "total-sellers":
+          return <TotalSellers />;
+        case "total-users":
+          return <TotalUsers />;
         default:
-          return <UserProfile />;
+          return <AdminProfile />;
       }
-    } else {
+    } else if(role === "seller"){
       switch (activeRoute) {
         case "profile":
           return <SellerProfile />;
@@ -40,6 +44,19 @@ export default function DashboardLayout() {
           return <TotalSell />;
         default:
           return <SellerProfile />;
+      }
+    }else{
+      switch (activeRoute) {
+        case "profile":
+          return <UserProfile />;
+        case "all-cart":
+          return <AllCart />;
+        case "ordered-item":
+          return <OrderedItems />;
+        case "pending-delivery":
+          return <PendingDelivery />;
+        default:
+          return <UserProfile />;
       }
     }
   };
