@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/app/components/NavBar";
 import SyntheraChatbot from "./components/chatbot/SyntheraChatbot";
+import NextAuthProvider from "@/providers/NextAuthProvider";
+
 import Footer from "./components/Footer";
 
 const geistSans = Geist({
@@ -52,12 +54,12 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         cz-shortcut-listen="true"
       >
-        <NavBar></NavBar>
-        <div>
-          {children}
-        </div>
-        <SyntheraChatbot/>
-        <Footer></Footer>
+        <NextAuthProvider>
+          <NavBar></NavBar>
+          <div>{children}</div>
+          <SyntheraChatbot />
+          <Footer></Footer>
+        </NextAuthProvider>
       </body>
     </html>
   );

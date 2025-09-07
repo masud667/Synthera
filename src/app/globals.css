@@ -1,5 +1,16 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+input:focus {
+  background-color: #F5F7F9 !important; 
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #F5F7F9 inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
