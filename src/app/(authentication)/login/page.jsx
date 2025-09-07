@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGoogle, FaFacebookF } from "react-icons/fa";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import logo from "../../assets/synthera_logo.png";
@@ -13,14 +13,14 @@ import Swal from "sweetalert2";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-    const router = useRouter();
-   const session = useSession();
+  const router = useRouter();
+  const session = useSession();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log("Email:", email, "Password:", password);
+
     const result = await signIn("credentials", {
       email,
       password,
@@ -45,14 +45,13 @@ export default function LoginPage() {
         router.push("/");
       });
     }
-
   };
+
   const handleSocialLogin = async (providerName) => {
     signIn(providerName);
-    
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if (session?.status == "authenticated") {
       router.push("/");
       Swal.fire({
@@ -89,7 +88,9 @@ export default function LoginPage() {
               <h3 className="text-2xl font-bold sm:text-3xl text-black">
                 Welcome Back
               </h3>
-              <p className="text-gray-800 mb-3">Please login to your account</p>
+              <p className="text-gray-800 mb-3">
+                Please login to your account
+              </p>
             </div>
           </div>
 
@@ -141,13 +142,23 @@ export default function LoginPage() {
           </div>
 
           <div className="flex space-x-4">
-            <button onClick={()=>{handleSocialLogin("google")}} className="flex-1 flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300">
+            <button
+              onClick={() => {
+                handleSocialLogin("google");
+              }}
+              className="flex-1 flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
+            >
               <FaGoogle className="w-5 h-5 mr-2 text-red-500" />
               Google
             </button>
-            <button  onClick={()=>{handleSocialLogin("facebook")}} className="flex-1  text-black flex items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300">
-              <FaFacebookF className="w-5 h-5 mr-2 text-blue-600" />
-              Facebook
+            <button
+              onClick={() => {
+                handleSocialLogin("github");
+              }}
+              className="flex-1 text-black flex items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
+            >
+              <FaGithub className="w-5 h-5 mr-2 text-gray-900" />
+              GitHub
             </button>
           </div>
 
