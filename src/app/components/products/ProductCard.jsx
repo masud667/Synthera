@@ -71,7 +71,7 @@ export default function ProductCard({ product }) {
           {title}
         </h3>
 
-        {/* Price */}
+        {/* Price*/}
         <div className="flex items-center gap-2 mt-1">
           <span className="text-lg font-bold text-black">${discountPrice}</span>
           {discountPrice < price && <span className="line-through text-gray-400">${price}</span>}
