@@ -1,19 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter  } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/app/components/NavBar";
 import SyntheraChatbot from "./components/chatbot/SyntheraChatbot";
 import NextAuthProvider from "@/providers/NextAuthProvider";
-
+import { ThemeProvider } from "next-themes";
 import Footer from "./components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-inter", 
 });
 
 export const metadata = {
@@ -49,16 +44,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+       className={`${inter.variable} antialiased`}
         cz-shortcut-listen="true"
       >
         <NextAuthProvider>
+           <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
           <NavBar></NavBar>
           <div>{children}</div>
           <SyntheraChatbot />
           <Footer></Footer>
+          </ThemeProvider>
         </NextAuthProvider>
       </body>
     </html>

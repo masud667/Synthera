@@ -1,29 +1,31 @@
 "use client";
 
-import { FaGoogle, FaFacebookF } from "react-icons/fa";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
-import logo from "../../assets/synthera_logo.png";
-import shopImg from "../../assets/shop_img3.png";
+import { FaGoogle, FaGithub, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { registerUser } from "@/app/actions/auth/registerUser";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
-export default function LoginPage() {
+import logo from "../../assets/synthera_logo.png";
+import shopImg from "../../assets/shop_img3.png";
+
+export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-    const router = useRouter();
- 
+  const router = useRouter();
+  const session = useSession();
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    
-    const result = await registerUser({ name, email, password });
+
+    // Register user in DB
+    const result = await registerUser({ name, email, password, role: "user" });
 
     if (result?.insertedId) {
       Swal.fire({
@@ -32,9 +34,26 @@ export default function LoginPage() {
         text: "User created successfully",
         timer: 1500,
         showConfirmButton: false,
-      }).then(() => {
+      }).then(async () => {
         form.reset();
-        router.push("/"); // redirect to home page
+
+        // **Auto login after registration**
+        const loginResult = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (loginResult?.ok) {
+          router.push("/");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text: "Please login manually",
+          });
+          router.push("/login");
+        }
       });
     } else {
       Swal.fire({
@@ -44,6 +63,23 @@ export default function LoginPage() {
       });
     }
   };
+
+  const handleSocialLogin = async (providerName) => {
+    signIn(providerName);
+  };
+
+  useEffect(() => {
+    if (session?.status == "authenticated") {
+      router.push("/");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  }, [session?.status]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -58,7 +94,6 @@ export default function LoginPage() {
             collections, track orders, and personalize your online store
             experience.
           </p>
-
           <Image src={shopImg} alt="Characters" className="w-96" />
         </div>
 
@@ -109,35 +144,40 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <div className="flex justify-between text-sm mb-4">
-              <span></span>
-              <a href="#" className="text-blue-500 hover:underline">
-                Forgot Password?
-              </a>
-            </div>
-
             <button
               type="submit"
               className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600"
             >
-              Login
+              Register
             </button>
           </form>
 
           <div className="flex items-center my-6">
             <div className="flex-grow h-px bg-gray-300"></div>
-            <span className="px-2 text-gray-400 text-sm">Or Login With</span>
+            <span className="px-2 text-gray-400 text-sm">
+              Or Register With
+            </span>
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
 
           <div className="flex space-x-4">
-            <button className="flex-1 flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300">
+            <button
+              onClick={() => {
+                handleSocialLogin("google");
+              }}
+              className="flex-1 flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
+            >
               <FaGoogle className="w-5 h-5 mr-2 text-red-500" />
               Google
             </button>
-            <button className="flex-1 text-black flex items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300">
-              <FaFacebookF className="w-5 h-5 mr-2 text-blue-600" />
-              Facebook
+            <button
+              onClick={() => {
+                handleSocialLogin("github");
+              }}
+              className="flex-1 text-black flex items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
+            >
+              <FaGithub className="w-5 h-5 mr-2 text-gray-900" />
+              GitHub
             </button>
           </div>
 

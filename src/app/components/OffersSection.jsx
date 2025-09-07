@@ -26,7 +26,7 @@ const OffersSection = () => {
     {
       id: 2,
       title: "New Arrivals",
-      description: "Be the first to shop our new collection",
+      description: "Be the first person to shop our new collection",
       discount: "25% OFF",
       image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       timeLeft: "06:30:00",
@@ -42,6 +42,16 @@ const OffersSection = () => {
       timeLeft: "24:00:00",
       tag: "SALE",
       color: "bg-green-500"
+    },
+    {
+      id: 4,
+      title: "New Arrivals",
+      description: "Be the first person to shop our new collection",
+      discount: "25% OFF",
+      image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      timeLeft: "06:30:00",
+      tag: "NEW",
+      color: "bg-blue-500"
     }
   ];
 
@@ -65,20 +75,18 @@ const OffersSection = () => {
   }, []);
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 bg-base-100">
       <div className="w-11/12 mx-auto ">
         {/* Section Header */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-start"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Special Offers</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Don't miss out on our limited-time offers. Grab your favorite fashion items before they're gone!
-          </p>
+          <h1 className="text-2xl font-bold mb-6">Special Offers</h1>
+        
         </motion.div>
 
       {/* Countdown Timer */}
@@ -140,11 +148,11 @@ const OffersSection = () => {
 
 
         {/* Offers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {offers.map((offer, index) => (
             <motion.div 
               key={offer.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300"
+              className="bg-base-100 rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 border border-base-300"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
