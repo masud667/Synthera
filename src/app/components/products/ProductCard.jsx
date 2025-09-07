@@ -2,9 +2,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaRegEye, FaShoppingCart, FaHeart } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product }) {
   const router = useRouter();
+  const { data: session } = useSession();
+
   const {
     title,
     category,
@@ -15,7 +20,7 @@ export default function ProductCard({ product, onAddToCart }) {
     variants,
     description,
     rating,
-    _id,
+    productId,
   } = product;
 
   const [activeImage, setActiveImage] = useState(thumbnail);
@@ -23,35 +28,64 @@ export default function ProductCard({ product, onAddToCart }) {
   const [selectedSize, setSelectedSize] = useState(sizes[0]);
   const [quantity, setQuantity] = useState(1);
 
+  // Add to Cart Handler
+  const handleAddToCart = async () => {
+    if (!session) {
+      toast.error("Please login first!");
+      return;
+    }
+
+    const cartItem = {
+      userEmail: session.user.email,
+      productId,
+      title,
+      thumbnail: activeImage,
+      size: selectedSize,
+      quantity,
+      price: discountPrice,
+    };
+
+    try {
+      const { data } = await axios.post("/api/cart", cartItem);
+      if (data.success) {
+        toast.success("Added to cart!");
+        setShowModal(false);
+      } else {
+        toast.error("Failed to add to cart");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to add to cart");
+    }
+  };
+
   return (
     <>
+      <Toaster position="top-right" />
+
       {/* Product Card */}
       <div className="shadow-md rounded-md w-[250px] relative group p-4 cursor-pointer">
-        {/* Image with hover overlay */}
-        <div
-          className="relative bg-[#E1E4E9] rounded-md p-3"
-          onClick={() => router.push(`/Products/${_id}`)}
-        >
-          <img
-            src={activeImage}
-            alt={title}
-            className="w-full h-[250px] object-contain"
-          />
+        <div className="relative bg-[#E1E4E9] rounded-md p-3">
+          <img src={activeImage} alt={title} className="w-full h-[250px] object-contain" />
+
           {/* Hover overlay */}
           <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition bg-black/40 rounded-md">
+            {/* Eye icon → go to details page */}
             <button
               onClick={(e) => {
-                e.stopPropagation(); // Prevent parent navigation
-                setShowModal(true);
+                e.stopPropagation();
+                router.push(`/Products/${productId}`);
               }}
               className="bg-white p-2 rounded-full hover:scale-110 transition"
             >
               <FaRegEye className="text-gray-800" />
             </button>
+
+            {/* Cart icon → open modal */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                onAddToCart(product);
+                setShowModal(true);
               }}
               className="bg-white p-2 rounded-full hover:scale-110 transition"
             >
@@ -65,19 +99,14 @@ export default function ProductCard({ product, onAddToCart }) {
           <span className="uppercase">{category}</span>
           <span>{sizes.join(" ")}</span>
         </div>
-        <h3
-          className="font-semibold text-gray-800 mt-1"
-          onClick={() => router.push(`/Products/${_id}`)}
-        >
+        <h3 className="font-semibold text-gray-800 mt-1" onClick={() => router.push(`/Products/${productId}`)}>
           {title}
         </h3>
 
         {/* Price */}
         <div className="flex items-center gap-2 mt-1">
           <span className="text-lg font-bold text-black">${discountPrice}</span>
-          {discountPrice < price && (
-            <span className="line-through text-gray-400">${price}</span>
-          )}
+          {discountPrice < price && <span className="line-through text-gray-400">${price}</span>}
         </div>
 
         {/* Variants + Wishlist */}
@@ -91,35 +120,25 @@ export default function ProductCard({ product, onAddToCart }) {
               onMouseLeave={() => setActiveImage(thumbnail)}
             />
           ))}
-          <button
-            className="ml-auto text-gray-500 hover:text-red-500"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <button className="ml-auto text-gray-500 hover:text-red-500" onClick={(e) => e.stopPropagation()}>
             <FaHeart />
           </button>
         </div>
       </div>
 
-      {/* Quick View Modal */}
+      {/* Quick Add-to-Cart Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-[600px] max-h-[90vh] overflow-y-auto relative">
+          <div className="bg-white rounded-lg p-6 w-[500px] max-h-[90vh] overflow-y-auto relative">
             {/* Close button */}
-            <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-black"
-              onClick={() => setShowModal(false)}
-            >
+            <button className="absolute top-3 right-3 text-gray-500 hover:text-black" onClick={() => setShowModal(false)}>
               ✕
             </button>
 
             <div className="grid grid-cols-2 gap-6">
               {/* Left: Image */}
               <div>
-                <img
-                  src={activeImage}
-                  alt={title}
-                  className="w-full h-[300px] object-contain rounded"
-                />
+                <img src={activeImage} alt={title} className="w-full h-[250px] object-contain rounded" />
               </div>
 
               {/* Right: Info */}
@@ -137,9 +156,7 @@ export default function ProductCard({ product, onAddToCart }) {
                 {/* Price */}
                 <div className="flex items-center gap-2 mt-2">
                   <span className="text-lg font-bold">${discountPrice}</span>
-                  {discountPrice < price && (
-                    <span className="line-through text-gray-400">${price}</span>
-                  )}
+                  {discountPrice < price && <span className="line-through text-gray-400">${price}</span>}
                 </div>
 
                 {/* Sizes */}
@@ -150,11 +167,7 @@ export default function ProductCard({ product, onAddToCart }) {
                       <button
                         key={s}
                         onClick={() => setSelectedSize(s)}
-                        className={`px-3 py-1 border rounded ${
-                          selectedSize === s
-                            ? "bg-black text-white"
-                            : "hover:bg-gray-200"
-                        }`}
+                        className={`px-3 py-1 border rounded ${selectedSize === s ? "bg-black text-white" : "hover:bg-gray-200"}`}
                       >
                         {s}
                       </button>
@@ -164,28 +177,17 @@ export default function ProductCard({ product, onAddToCart }) {
 
                 {/* Quantity */}
                 <div className="flex items-center gap-2 mt-4">
-                  <button
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="px-3 py-1 border rounded"
-                  >
+                  <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="px-3 py-1 border rounded">
                     -
                   </button>
                   <span>{quantity}</span>
-                  <button
-                    onClick={() => setQuantity((q) => q + 1)}
-                    className="px-3 py-1 border rounded"
-                  >
+                  <button onClick={() => setQuantity((q) => q + 1)} className="px-3 py-1 border rounded">
                     +
                   </button>
                 </div>
 
                 {/* Add to Cart */}
-                <button
-                  onClick={() =>
-                    onAddToCart({ ...product, selectedSize, quantity })
-                  }
-                  className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
-                >
+                <button onClick={handleAddToCart} className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition">
                   Add to Cart
                 </button>
               </div>

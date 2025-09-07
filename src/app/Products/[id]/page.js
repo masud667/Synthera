@@ -4,7 +4,7 @@ import products from "@/../public/product.json";
 
 export default function ProductDetails({ params }) {
   const { id } = params;
-  const product = products.find((p) => p._id.toString() === id);
+  const product = products.find((p) => p.productId.toString() === id);
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || "");
   const [quantity, setQuantity] = useState(1);
