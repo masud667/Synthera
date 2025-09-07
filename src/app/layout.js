@@ -44,13 +44,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" >
       <body
-        className='antialiased'
+       className={`${inter.variable} antialiased`}
         cz-shortcut-listen="true"
       >
         <NextAuthProvider>
-           <ThemeProvider attribute="data-theme" defaultTheme="light">
+           <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
           <NavBar></NavBar>
           <div>{children}</div>
           <SyntheraChatbot />
