@@ -2,13 +2,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaRegEye, FaShoppingCart, FaHeart } from "react-icons/fa";
-import { useSession } from "next-auth/react";
-import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import useAddToCart from "@/app/hooks/useAddToCart"; // <- import the hook
 
 export default function ProductCard({ product }) {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { addToCart } = useAddToCart(); // <- get the reusable addToCart function
 
   const {
     title,
@@ -27,37 +26,6 @@ export default function ProductCard({ product }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedSize, setSelectedSize] = useState(sizes[0]);
   const [quantity, setQuantity] = useState(1);
-
-  // Add to Cart Handler
-  const handleAddToCart = async () => {
-    if (!session) {
-      toast.error("Please login first!");
-      return;
-    }
-
-    const cartItem = {
-      userEmail: session.user.email,
-      productId,
-      title,
-      thumbnail: activeImage,
-      size: selectedSize,
-      quantity,
-      price: discountPrice,
-    };
-
-    try {
-      const { data } = await axios.post("/api/cart", cartItem);
-      if (data.success) {
-        toast.success("Added to cart!");
-        setShowModal(false);
-      } else {
-        toast.error("Failed to add to cart");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to add to cart");
-    }
-  };
 
   return (
     <>
@@ -187,7 +155,10 @@ export default function ProductCard({ product }) {
                 </div>
 
                 {/* Add to Cart */}
-                <button onClick={handleAddToCart} className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition">
+                <button
+                  onClick={() => addToCart(product, selectedSize, quantity)} // <- call the hook function
+                  className="mt-4 w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
+                >
                   Add to Cart
                 </button>
               </div>
