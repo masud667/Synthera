@@ -10,6 +10,9 @@ import {
   BarChart,
   Menu,
   X,
+  ShieldCheck,
+  UserCheck,
+  Users,
 } from "lucide-react";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
@@ -30,8 +33,21 @@ export default function Sidebar({ role, activeRoute, setActiveRoute }) {
     { name: "All Products", key: "all-product", icon: List },
     { name: "Total Sell", key: "total-sell", icon: BarChart },
   ];
+  const adminLinks = [
+    { name: "Profile", key: "profile", icon: Home },
+    { name: "Seller Requests", key: "seller-request", icon: ShieldCheck },
+    { name: "Total Sellers", key: "total-sellers", icon: UserCheck },
+    { name: "Total Users", key: "total-users", icon: Users },
+  ];
 
-  const links = role === "user" ? userLinks : sellerLinks;
+  let links = [];
+  if (role === "user") {
+    links = userLinks;
+  } else if (role === "seller") {
+    links = sellerLinks;
+  } else if (role === "admin") {
+    links = adminLinks;
+  }
 
   return (
     <>
