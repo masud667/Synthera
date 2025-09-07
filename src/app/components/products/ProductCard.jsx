@@ -20,6 +20,7 @@ export default function ProductCard({ product }) {
     description,
     rating,
     productId,
+    // _id
   } = product;
 
   const [activeImage, setActiveImage] = useState(thumbnail);
