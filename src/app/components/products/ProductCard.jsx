@@ -3,12 +3,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaRegEye, FaShoppingCart, FaHeart } from "react-icons/fa";
 import { Toaster } from "react-hot-toast";
-import useAddToCart from "@/app/hooks/useAddToCart"; // <- import the hook
+import useAddToCart from "@/app/hooks/useAddToCart"; 
+import useWishlist from "@/app/hooks/useWishlist";
 
 export default function ProductCard({ product }) {
   const router = useRouter();
-  const { addToCart } = useAddToCart(); // <- get the reusable addToCart function
-
+  const { addToCart } = useAddToCart(); 
+const { addToWishlist } = useWishlist();
   const {
     title,
     category,
@@ -89,9 +90,15 @@ export default function ProductCard({ product }) {
               onMouseLeave={() => setActiveImage(thumbnail)}
             />
           ))}
-          <button className="ml-auto text-gray-500 hover:text-red-500" onClick={(e) => e.stopPropagation()}>
-            <FaHeart />
-          </button>
+         <button
+    className="ml-auto text-gray-500 hover:text-red-500"
+    onClick={(e) => {
+      e.stopPropagation();
+      addToWishlist(product); 
+    }}
+  >
+    <FaHeart />
+  </button>
         </div>
       </div>
 
