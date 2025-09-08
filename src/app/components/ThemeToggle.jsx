@@ -10,7 +10,7 @@ export default function ThemeToggle() {
 
   // Prevent hydration error
   useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
+if (!mounted || !theme) return null;
 
   // Determine next theme
   const nextTheme = theme === "light" ? "dark" : "light";
