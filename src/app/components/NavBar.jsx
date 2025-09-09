@@ -3,13 +3,12 @@
 import ThemeToggle from "../components/ThemeToggle";
 import React from "react";
 import Image from "next/image";
-// import logo from "../assets/synthera_logo.png";
-
+import logo from "../assets/synthera_logo.png";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 const NavBar = () => {
   const { data: session ,status} = useSession();
-  console.log(status);
+  
 
   const navItems = (
     <>
@@ -26,9 +25,10 @@ const NavBar = () => {
         <div className="navbar">
           {/* Navbar Start */}
           <div className="navbar-start">
-            <a>
-              <Image src="/synthera_logo.png" alt="Synthera_logo"  width={160} height={44} />
-            </a>
+          
+<a href="/">
+  <Image src={logo} alt="Synthera Logo" width={176} height={44} />
+</a>
           </div>
 
           {/* Navbar Center */}
