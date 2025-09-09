@@ -11,8 +11,4 @@
 //   },
 // };
 
-<<<<<<< HEAD
-module.exports = nextConfig;
-=======
 // module.exports = nextConfig;
->>>>>>> ce032878671ca95dbeb8cc5e7694db0b28672ee8

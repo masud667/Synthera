@@ -1,14 +1,16 @@
-import { Inter  } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/app/components/NavBar";
 import SyntheraChatbot from "./components/chatbot/SyntheraChatbot";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 import { ThemeProvider } from "next-themes";
 import Footer from "./components/Footer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter", 
+  variable: "--font-inter",
 });
 
 export const metadata = {
@@ -42,19 +44,21 @@ export const metadata = {
   },
 };
 
+const queryClient = new QueryClient();
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-       className={`${inter.variable} antialiased`}
-        cz-shortcut-listen="true"
-      >
+      <body className={`${inter.variable} antialiased`} cz-shortcut-listen="true">
         <NextAuthProvider>
-           <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
-          <NavBar></NavBar>
-          <div>{children}</div>
-          <SyntheraChatbot />
-          <Footer></Footer>
+          <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
+            <QueryClientProvider client={queryClient}>
+              <NavBar />
+              <div>{children}</div>
+              <SyntheraChatbot />
+              <Footer />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
           </ThemeProvider>
         </NextAuthProvider>
       </body>
