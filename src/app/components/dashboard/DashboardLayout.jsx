@@ -13,10 +13,14 @@ import AdminProfile from "./admin/AdminProfile";
 import SellerRequest from "./admin/SellerRequest";
 import TotalSellers from "./admin/TotalSellers";
 import TotalUsers from "./admin/TotalUsers";
+import { useSession } from "next-auth/react";
 
 export default function DashboardLayout() {
   const [activeRoute, setActiveRoute] = useState("profile");
+  const {session: data, status }= useSession()
   const [role] = useState("user");
+  console.log(status);
+  
 
   const renderContent = () => {
     if (role === "admin") {
