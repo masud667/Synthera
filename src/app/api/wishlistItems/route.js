@@ -1,4 +1,4 @@
-import dbConnetion from "@/lib/dbConnection";
+import dbConnection from "@/lib/dbConnection";
 
 
 export async function POST(req) {
@@ -9,7 +9,7 @@ export async function POST(req) {
     }
 
     // Create collection for wishlist
-    const wishlistCollection = dbConnetion("wishlistItems");
+    const wishlistCollection = dbConnection("wishlistItems");
 
     //  check if items already exists
     const exists = await wishlistCollection.findOne({

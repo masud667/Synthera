@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import FacebookProvider from "next-auth/providers/facebook";
-import dbConnetion from "./dbConnection";
+import dbConnection from "./dbConnection";
 import { loginUser } from "@/app/actions/auth/loginUser";
 
 export const authOptions = {
@@ -56,7 +56,7 @@ export const authOptions = {
       if (account) {
         const { providerAccountId, provider } = account;
         const { email: user_email, image, name } = user;
-        const userCollection = dbConnetion("userCollection");
+        const userCollection = dbConnection("userCollection");
         const isExisted = await userCollection.findOne({ providerAccountId });
         if (!isExisted) {
           const payload = {

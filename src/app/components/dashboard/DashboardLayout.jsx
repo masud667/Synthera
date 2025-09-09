@@ -16,7 +16,7 @@ import TotalUsers from "./admin/TotalUsers";
 
 export default function DashboardLayout() {
   const [activeRoute, setActiveRoute] = useState("profile");
-  const [role] = useState("seller");
+  const [role] = useState("user");
 
   const renderContent = () => {
     if (role === "admin") {
