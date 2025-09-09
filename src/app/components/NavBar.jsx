@@ -27,7 +27,7 @@ const NavBar = () => {
           {/* Navbar Start */}
           <div className="navbar-start">
             <a>
-              <Image src="/synthera_logo.png" alt="Synthera_logo" className="w-44" />
+              <Image src="/synthera_logo.png" alt="Synthera_logo"  width={160} height={44} />
             </a>
           </div>
 
