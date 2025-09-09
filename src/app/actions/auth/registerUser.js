@@ -1,11 +1,11 @@
 "use server";
 
 
-import dbConnetion from "@/lib/dbConnection";
+import dbConnection from "@/lib/dbConnection";
 import bcrypt from "bcrypt";
 
 export const registerUser = async (payload) => {
-  const userCollections = await dbConnetion("userCollection");
+  const userCollections = await dbConnection("userCollection");
   console.log(userCollections);
   const { email, password } = payload;
   if (!email) return null;
