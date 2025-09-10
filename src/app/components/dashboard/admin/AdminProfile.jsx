@@ -169,7 +169,7 @@ export default function AdminProfile() {
           <User size={28} className="text-yellow-400" />
           <div>
             <p className="text-sm text-gray-300">Total Users</p>
-            <h3 className="text-xl font-bold">{filteredUser.length}</h3>
+            <h3 className="text-xl font-bold">{totalUser.length}</h3>
           </div>
         </motion.div>
 

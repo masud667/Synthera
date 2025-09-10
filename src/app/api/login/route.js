@@ -1,4 +1,4 @@
-import { connectDB } from "@/app/lib/connectDB";
+import { connectDB } from "@/lib/connectDB";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 

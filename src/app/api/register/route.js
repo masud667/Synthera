@@ -1,4 +1,4 @@
-import { connectDB } from "@/app/lib/connectDB";
+import { connectDB } from "@/lib/connectDB";
 import bcrypt from "bcrypt";
 
 export async function POST(req) {
@@ -10,9 +10,12 @@ export async function POST(req) {
     const { name, email, password, role } = body;
 
     if (!name || !email || !password) {
-      return new Response(JSON.stringify({ error: "All fields are required" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({ error: "All fields are required" }),
+        {
+          status: 400,
+        }
+      );
     }
 
     const existingUser = await usersCollection.findOne({ email });
@@ -38,6 +41,8 @@ export async function POST(req) {
     );
   } catch (error) {
     console.error("Register API Error:", error);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+    });
   }
 }
