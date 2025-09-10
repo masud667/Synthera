@@ -1,14 +1,10 @@
-import { Inter  } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/app/components/NavBar";
-import SyntheraChatbot from "./components/chatbot/SyntheraChatbot";
-import NextAuthProvider from "@/providers/NextAuthProvider";
-import { ThemeProvider } from "next-themes";
-import Footer from "./components/Footer";
+import ClientProviders from "./components/clientProvider/ClientProviders";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter", 
+  variable: "--font-inter",
 });
 
 export const metadata = {
@@ -46,17 +42,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-       className={`${inter.variable} antialiased`}
+        className={`${inter.variable} antialiased`}
         cz-shortcut-listen="true"
       >
-        <NextAuthProvider>
-           <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
-          <NavBar></NavBar>
-          <div>{children}</div>
-          <SyntheraChatbot />
-          <Footer></Footer>
-          </ThemeProvider>
-        </NextAuthProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

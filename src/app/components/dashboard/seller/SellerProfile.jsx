@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Store } from "lucide-react";
 import {
@@ -15,6 +15,7 @@ import {
   Cell,
   Legend,
 } from "recharts";
+import axios from "axios";
 
 const salesData = [
   { month: "Jan", sales: 400 },
@@ -35,6 +36,34 @@ const categoryData = [
 const COLORS = ["#FFBB38", "#ff7aa2", "#7b61ff", "#36d399"];
 
 export default function SellerProfile() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/user/me");
+        setUser(res.data.user);
+      } catch (err) {
+        console.error(
+          "Error fetching user:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
+    );
+
   return (
     <div className="space-y-6">
       {/* Top Profile Card */}
@@ -53,10 +82,10 @@ export default function SellerProfile() {
           {/* Seller Info */}
           <div className="flex-1 space-y-2 text-center sm:text-left">
             <h2 className="text-2xl font-bold text-white">Synthera Store</h2>
-            <p className="text-gray-200">Md Shanto Sarkar</p>
+            <p className="text-gray-200">{user?.name}</p>
             <div className="flex justify-center sm:justify-start gap-4 mt-2 text-gray-200 text-sm">
               <div className="flex items-center gap-1">
-                <Mail size={14} /> shanto@example.com
+                <Mail size={14} /> {user?.email}
               </div>
               <div className="flex items-center gap-1">
                 <Phone size={14} /> +880 1234-567890
