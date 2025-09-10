@@ -5,19 +5,33 @@ import Sidebar from "./Sidebar";
 import axios from "axios";
 
 const AllCart = dynamic(() => import("./user/AllCart"), { ssr: false });
-const OrderedItems = dynamic(() => import("./user/OrderedItems"), { ssr: false });
-const PendingDelivery = dynamic(() => import("./user/PendingDelivery"), { ssr: false });
+const OrderedItems = dynamic(() => import("./user/OrderedItems"), {
+  ssr: false,
+});
+const PendingDelivery = dynamic(() => import("./user/PendingDelivery"), {
+  ssr: false,
+});
 
 const AddProduct = dynamic(() => import("./seller/AddProduct"), { ssr: false });
-const AllProducts = dynamic(() => import("./seller/AllProducts"), { ssr: false });
+const AllProducts = dynamic(() => import("./seller/AllProducts"), {
+  ssr: false,
+});
 const TotalSell = dynamic(() => import("./seller/TotalSell"), { ssr: false });
-const SellerProfile = dynamic(() => import("./seller/SellerProfile"), { ssr: false });
+const SellerProfile = dynamic(() => import("./seller/SellerProfile"), {
+  ssr: false,
+});
 
 const UserProfile = dynamic(() => import("./user/UserProfile"), { ssr: false });
 
-const AdminProfile = dynamic(() => import("./admin/AdminProfile"), { ssr: false });
-const SellerRequest = dynamic(() => import("./admin/SellerRequest"), { ssr: false });
-const TotalSellers = dynamic(() => import("./admin/TotalSellers"), { ssr: false });
+const AdminProfile = dynamic(() => import("./admin/AdminProfile"), {
+  ssr: false,
+});
+const SellerRequest = dynamic(() => import("./admin/SellerRequest"), {
+  ssr: false,
+});
+const TotalSellers = dynamic(() => import("./admin/TotalSellers"), {
+  ssr: false,
+});
 const TotalUsers = dynamic(() => import("./admin/TotalUsers"), { ssr: false });
 
 export default function DashboardLayout() {

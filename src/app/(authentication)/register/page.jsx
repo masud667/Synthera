@@ -1,10 +1,9 @@
 "use client";
 
-import { FaGoogle, FaGithub, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { registerUser } from "@/app/actions/auth/registerUser";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
@@ -16,56 +15,74 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const session = useSession();
+  const today = new Date();
 
-  const handleSubmit = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
 
-    // Register user in DB
-    const result = await registerUser({ name, email, password, role: "user" });
+    const formData = new FormData(e.target);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const role = "user";
+    const createdAt = `${String(today.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(today.getDate()).padStart(2, "0")}-${today.getFullYear()}`;
 
-    if (result?.insertedId) {
-      Swal.fire({
-        icon: "success",
-        title: "Registered!",
-        text: "User created successfully",
-        timer: 1500,
-        showConfirmButton: false,
-      }).then(async () => {
-        form.reset();
-
-        // **Auto login after registration**
-        const loginResult = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
-
-        if (loginResult?.ok) {
-          router.push("/");
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Login Failed",
-            text: "Please login manually",
-          });
-          router.push("/login");
-        }
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role, createdAt }),
       });
-    } else {
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: data.error || "Signup failed",
+        });
+        return;
+      }
+
+      // Auto login after signup using NextAuth Credentials
+      const loginRes = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (loginRes?.error) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Error",
+          text: loginRes.error,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Signed up and logged in successfully!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        router.push("/");
+      }
+    } catch (err) {
+      console.error("Signup Error:", err);
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "User already exists or registration failed",
+        title: "Error",
+        text: "Something went wrong",
       });
     }
   };
 
-  const handleSocialLogin = async (providerName) => {
-    signIn(providerName);
+  const handleSocialLogin = () => {
+    console.log("trying to log in with google");
   };
 
   useEffect(() => {
@@ -111,7 +128,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSignUp} className="space-y-4">
             <input
               type="text"
               name="name"
@@ -138,7 +155,7 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute cursor-pointer right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -146,7 +163,7 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600"
+              className="w-full cursor-pointer bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600"
             >
               Register
             </button>
@@ -154,30 +171,19 @@ export default function RegisterPage() {
 
           <div className="flex items-center my-6">
             <div className="flex-grow h-px bg-gray-300"></div>
-            <span className="px-2 text-gray-400 text-sm">
-              Or Register With
-            </span>
+            <span className="px-2 text-gray-400 text-sm">Or Register With</span>
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
 
-          <div className="flex space-x-4">
+          <div className="flex">
             <button
               onClick={() => {
-                handleSocialLogin("google");
+                handleSocialLogin();
               }}
-              className="flex-1 flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
+              className="flex-1 cursor-pointer flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
             >
               <FaGoogle className="w-5 h-5 mr-2 text-red-500" />
               Google
-            </button>
-            <button
-              onClick={() => {
-                handleSocialLogin("github");
-              }}
-              className="flex-1 text-black flex items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
-            >
-              <FaGithub className="w-5 h-5 mr-2 text-gray-900" />
-              GitHub
             </button>
           </div>
 
