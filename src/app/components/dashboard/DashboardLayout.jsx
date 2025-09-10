@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+import WishlistItems from "./user/WishlistItems";
 
 const AllCart = dynamic(() => import("./user/AllCart"), { ssr: false });
 const OrderedItems = dynamic(() => import("./user/OrderedItems"), {
@@ -98,6 +99,8 @@ export default function DashboardLayout() {
           return <UserProfile />;
         case "all-cart":
           return <AllCart />;
+        case "wishlist":
+          return <WishlistItems/>;
         case "ordered-item":
           return <OrderedItems />;
         case "pending-delivery":

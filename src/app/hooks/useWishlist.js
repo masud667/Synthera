@@ -15,7 +15,7 @@ export default function useWishlist() {
 
     const wishlistItem = {
       userEmail: session.user.email,
-      productId: product.productId,
+      productId: product._id,
       title: product.title,
       thumbnail: product.thumbnail,
       price: product.discountPrice,
@@ -26,13 +26,27 @@ export default function useWishlist() {
       if (data.success) {
         toast.success("Added to wishlist!");
       } else {
-        toast.error("Failed to add to wishlist");
+        toast.error(data.message || "Failed to add to wishlist");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Add wishlist error:", err);
       toast.error("Failed to add to wishlist");
     }
   };
 
-  return { addToWishlist };
+  const removeFromWishlist = async (id) => {
+    try {
+      const { data } = await axios.delete(`/api/wishlistItems/${id}`);
+      if (data.success) {
+        toast.success("Removed from wishlist");
+      } else {
+        toast.error("Failed to remove item");
+      }
+    } catch (err) {
+      console.error("Remove wishlist error:", err);
+      toast.error("Failed to remove item");
+    }
+  };
+
+  return { addToWishlist, removeFromWishlist };
 }

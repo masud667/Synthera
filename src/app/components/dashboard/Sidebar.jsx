@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
+  Heart,
   ShoppingCart,
   Package,
   Clock,
@@ -23,6 +24,7 @@ export default function Sidebar({ role, activeRoute, setActiveRoute }) {
   const userLinks = [
     { name: "Profile", key: "profile", icon: Home },
     { name: "All Cart", key: "all-cart", icon: ShoppingCart },
+    { name: "Wishlist", key: "wishlist", icon: Heart },
     { name: "Ordered Items", key: "ordered-item", icon: Package },
     { name: "Pending Delivery", key: "pending-delivery", icon: Clock },
   ];

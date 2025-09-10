@@ -2,9 +2,9 @@ import ProductGrid from "./ProductGrid";
 
 
 export default async function ShopContent() {
-  const res = await fetch("http://localhost:3000/product.json", { cache: "no-store" });
+  // const res = await fetch("http://localhost:3000/product.json", { cache: "no-store" });
   // TODO
-  //const res = await fetch("http://localhost:3000/api/products", { cache: "no-store" });
+  const res = await fetch("http://localhost:3000/api/products", { cache: "no-store" });
   const products = await res.json();
 
   return (

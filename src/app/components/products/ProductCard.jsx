@@ -20,8 +20,8 @@ const { addToWishlist } = useWishlist();
     variants,
     description,
     rating,
-    productId,
-    // _id
+  _id
+  
   } = product;
 
   const [activeImage, setActiveImage] = useState(thumbnail);
@@ -44,7 +44,7 @@ const { addToWishlist } = useWishlist();
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                router.push(`/Products/${productId}`);
+                router.push(`/Products/${_id}`);
               }}
               className="bg-white p-2 rounded-full hover:scale-110 transition"
             >
