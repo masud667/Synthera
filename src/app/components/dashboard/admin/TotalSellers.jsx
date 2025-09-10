@@ -1,49 +1,50 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-
-// Mock data
-const sellersData = [
-  {
-    id: 1,
-    name: "John Smith",
-    email: "johnsmith@example.com",
-    date: "2025-09-01",
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    email: "janedoe@example.com",
-    date: "2025-09-03",
-  },
-  {
-    id: 3,
-    name: "Michael Brown",
-    email: "michaelbrown@example.com",
-    date: "2025-09-05",
-  },
-  {
-    id: 4,
-    name: "Sarah Johnson",
-    email: "sarahj@example.com",
-    date: "2025-09-06",
-  },
-];
+import axios from "axios";
 
 export default function TotalSellers() {
   const [search, setSearch] = useState("");
   const [sortRecent, setSortRecent] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/users");
+        setUser(res.data.users);
+      } catch (err) {
+        console.error(
+          "Error fetching user:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const totalSeller = user?.filter((res) => res.role === "seller");
 
   // Filtered and sorted sellers
-  const filteredSellers = sellersData
-    .filter((seller) =>
+  const filteredSellers = totalSeller?.filter((seller) =>
       seller.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) =>
       sortRecent
-        ? new Date(b.date) - new Date(a.date)
-        : new Date(a.date) - new Date(b.date)
+        ? new Date(b.createdAt) - new Date(a.createdAt)
+        : new Date(a.createdAt) - new Date(b.createdAt)
+    );
+
+  if (loading)
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
     );
 
   return (
@@ -57,7 +58,7 @@ export default function TotalSellers() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold text-white">
           Total Sellers:{" "}
-          <span className="text-yellow-400">{sellersData.length}</span>
+          <span className="text-yellow-400">{totalSeller.length}</span>
         </h2>
 
         {/* Search & Filter */}
@@ -93,7 +94,7 @@ export default function TotalSellers() {
         <tbody>
           {filteredSellers.map((seller, index) => (
             <motion.tr
-              key={seller.id}
+              key={seller._id}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -101,7 +102,9 @@ export default function TotalSellers() {
             >
               <td className="p-3 font-medium">{seller.name}</td>
               <td className="p-3">{seller.email}</td>
-              <td className="p-3 text-gray-300">{seller.date}</td>
+              <td className="p-3 text-gray-300">
+                {seller.createdAt.slice(0, 10)}
+              </td>
               <td className="p-3 flex justify-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}

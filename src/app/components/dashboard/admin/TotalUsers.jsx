@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
+import axios from "axios";
 
 // Mock data
 const usersData = [
@@ -34,14 +35,45 @@ const usersData = [
 export default function TotalUsers() {
   const [search, setSearch] = useState("");
   const [sortRecent, setSortRecent] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/users");
+        setUser(res.data.users);
+      } catch (err) {
+        console.error(
+          "Error fetching user:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const totalUsers = user?.filter((res) => res.role === "user");
 
   // Filtered and sorted users
-  const filteredUsers = usersData
-    .filter((user) => user.name.toLowerCase().includes(search.toLowerCase()))
-    .sort((a, b) =>
-      sortRecent
-        ? new Date(b.date) - new Date(a.date)
-        : new Date(a.date) - new Date(b.date)
+const filteredUsers = totalUsers
+  ?.filter((user) =>
+    user.name.toLowerCase().includes(search.toLowerCase())
+  )
+  .sort((a, b) =>
+    sortRecent
+      ? new Date(b.createdAt) - new Date(a.createdAt) 
+      : new Date(a.createdAt) - new Date(b.createdAt)
+  );
+
+  if (loading)
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
     );
 
   return (
@@ -55,7 +87,7 @@ export default function TotalUsers() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold text-white">
           Total Users:{" "}
-          <span className="text-yellow-400">{usersData.length}</span>
+          <span className="text-yellow-400">{totalUsers.length}</span>
         </h2>
 
         {/* Search & Filter */}
@@ -91,7 +123,7 @@ export default function TotalUsers() {
         <tbody>
           {filteredUsers.map((user, index) => (
             <motion.tr
-              key={user.id}
+              key={user._id}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -99,7 +131,7 @@ export default function TotalUsers() {
             >
               <td className="p-3 font-medium">{user.name}</td>
               <td className="p-3">{user.email}</td>
-              <td className="p-3 text-gray-300">{user.date}</td>
+              <td className="p-3 text-gray-300">{user.createdAt.slice(0,10)}</td>
               <td className="p-3 flex justify-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
