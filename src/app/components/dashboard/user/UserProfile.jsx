@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Heart, ShoppingCart, CheckCircle, MapPin } from "lucide-react";
 import {
@@ -11,6 +11,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import axios from "axios";
 
 const purchaseData = [
   { month: "Jan", orders: 2 },
@@ -22,6 +23,34 @@ const purchaseData = [
 ];
 
 export default function UserProfile() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/user/me");
+        setUser(res.data.user);
+      } catch (err) {
+        console.error(
+          "Error fetching user:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
+    );
+
   return (
     <div className="space-y-6">
       {/* Top User Info */}
@@ -39,14 +68,11 @@ export default function UserProfile() {
 
           {/* User Info */}
           <div className="flex-1 space-y-2 text-center sm:text-left">
-            <h2 className="text-2xl font-bold text-white">Md Shanto Sarkar</h2>
-            <p className="text-gray-200">shanto@example.com</p>
+            <h2 className="text-2xl font-bold text-white">{user?.name}</h2>
+            <p className="text-gray-200">{user?.email}</p>
             <div className="flex justify-center sm:justify-start gap-4 mt-2 text-gray-200 text-sm">
               <div className="flex items-center gap-1">
-                <Mail size={14} /> shanto@example.com
-              </div>
-              <div className="flex items-center gap-1">
-                <MapPin size={14} /> Dhaka, Bangladesh
+                CreatedAt : <span>{user.createdAt.slice(0, 10)} </span>
               </div>
             </div>
             <span className="mt-2 inline-block px-5 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
