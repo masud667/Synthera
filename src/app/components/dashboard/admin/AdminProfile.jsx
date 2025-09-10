@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GiCheckMark } from "react-icons/gi";
 import { Pie, Line, Bar, Doughnut } from "react-chartjs-2";
@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import { User, Users, DollarSign } from "lucide-react";
 import { FaMarkdown } from "react-icons/fa";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -29,18 +30,44 @@ ChartJS.register(
 );
 
 export default function AdminProfile() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/users");
+        setUser(res.data.users);
+      } catch (err) {
+        console.error(
+          "Error fetching user:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const filteredUser = user?.filter(
+    (res) => res.email === "admin@synthera.com"
+  );
+  const totalUser = user?.filter((res) => res.role === "user");
+  const totalSeller = user?.filter((res) => res.role === "seller");
+
   /** ------------ PIE CHART DATA ------------ */
   const pieData = {
     labels: ["Users", "Sellers"],
     datasets: [
       {
-        data: [1200, 150],
+        data: [totalUser?.length || 0, totalSeller?.length || 0],
         backgroundColor: ["#facc15", "#1d4ed8"],
         borderWidth: 0,
       },
     ],
   };
-
   /** ------------ REVENUE LINE CHART DATA ------------ */
   const revenueData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
@@ -55,7 +82,6 @@ export default function AdminProfile() {
       },
     ],
   };
-
   /** ------------ BAR CHART DATA (Sales by Category) ------------ */
   const barData = {
     labels: ["Electronics", "Fashion", "Home", "Beauty", "Sports"],
@@ -67,7 +93,6 @@ export default function AdminProfile() {
       },
     ],
   };
-
   /** ------------ DOUGHNUT CHART DATA (Revenue Breakdown by Category) ------------ */
   const revenueBreakdownData = {
     labels: ["Electronics", "Fashion", "Home", "Beauty", "Sports"],
@@ -85,7 +110,6 @@ export default function AdminProfile() {
       },
     ],
   };
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -104,6 +128,13 @@ export default function AdminProfile() {
       },
     },
   };
+
+  if (loading)
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
+    );
 
   return (
     <motion.div
@@ -126,8 +157,8 @@ export default function AdminProfile() {
         />
         <div>
           <h2 className="text-2xl font-bold">Admin Dashboard</h2>
-          <p className="text-gray-300">Name: John Doe</p>
-          <p className="text-gray-300">Email: admin@example.com</p>
+          <p className="text-gray-300">Name: {filteredUser[0]?.name}</p>
+          <p className="text-gray-300">Email: {filteredUser[0]?.email}</p>
           <p className="text-yellow-400 font-semibold">Role: Admin</p>
         </div>
       </motion.div>
@@ -138,7 +169,7 @@ export default function AdminProfile() {
           <User size={28} className="text-yellow-400" />
           <div>
             <p className="text-sm text-gray-300">Total Users</p>
-            <h3 className="text-xl font-bold">1,200</h3>
+            <h3 className="text-xl font-bold">{filteredUser.length}</h3>
           </div>
         </motion.div>
 
@@ -146,7 +177,7 @@ export default function AdminProfile() {
           <Users size={28} className="text-yellow-400" />
           <div>
             <p className="text-sm text-gray-300">Total Sellers</p>
-            <h3 className="text-xl font-bold">150</h3>
+            <h3 className="text-xl font-bold">{totalSeller.length}</h3>
           </div>
         </motion.div>
 
