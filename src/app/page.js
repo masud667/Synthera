@@ -9,9 +9,9 @@ export default function Home() {
   return (
     <>
       <HeroBanner />
-       <ShopContent></ShopContent>
       <Categories></Categories>
-      <TrendingProducts></TrendingProducts>
+      <ShopContent></ShopContent>
+      {/* <TrendingProducts></TrendingProducts> */}
       <OffersSection />
     </>
   )
