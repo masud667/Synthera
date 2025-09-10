@@ -5,8 +5,8 @@ import SyntheraChatbot from "./components/chatbot/SyntheraChatbot";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 import { ThemeProvider } from "next-themes";
 import Footer from "./components/Footer";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,21 +44,18 @@ export const metadata = {
   },
 };
 
-const queryClient = new QueryClient();
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`} cz-shortcut-listen="true">
+      <body className={`${inter.variable} antialiased`}>
         <NextAuthProvider>
           <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
-            <QueryClientProvider client={queryClient}>
+            <ReactQueryProvider>
               <NavBar />
               <div>{children}</div>
               <SyntheraChatbot />
               <Footer />
-              <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
+            </ReactQueryProvider>
           </ThemeProvider>
         </NextAuthProvider>
       </body>

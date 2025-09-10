@@ -14,6 +14,7 @@ import SellerRequest from "./admin/SellerRequest";
 import TotalSellers from "./admin/TotalSellers";
 import TotalUsers from "./admin/TotalUsers";
 import { useSession } from "next-auth/react";
+import WishlistItems from "./user/WishlistItems";
 
 export default function DashboardLayout() {
   const [activeRoute, setActiveRoute] = useState("profile");
@@ -55,6 +56,8 @@ export default function DashboardLayout() {
           return <UserProfile />;
         case "all-cart":
           return <AllCart />;
+        case "wishlist":
+          return <WishlistItems/>;
         case "ordered-item":
           return <OrderedItems />;
         case "pending-delivery":
