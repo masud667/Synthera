@@ -1,22 +1,69 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import Sidebar from "./Sidebar";
-import AllCart from "./user/AllCart";
-import OrderedItems from "./user/OrderedItems";
-import PendingDelivery from "./user/PendingDelivery";
-import AddProduct from "./seller/AddProduct";
-import AllProducts from "./seller/AllProducts";
-import TotalSell from "./seller/TotalSell";
-import SellerProfile from "./seller/SellerProfile";
-import UserProfile from "./user/UserProfile";
-import AdminProfile from "./admin/AdminProfile";
-import SellerRequest from "./admin/SellerRequest";
-import TotalSellers from "./admin/TotalSellers";
-import TotalUsers from "./admin/TotalUsers";
+import axios from "axios";
+
+const AllCart = dynamic(() => import("./user/AllCart"), { ssr: false });
+const OrderedItems = dynamic(() => import("./user/OrderedItems"), {
+  ssr: false,
+});
+const PendingDelivery = dynamic(() => import("./user/PendingDelivery"), {
+  ssr: false,
+});
+
+const AddProduct = dynamic(() => import("./seller/AddProduct"), { ssr: false });
+const AllProducts = dynamic(() => import("./seller/AllProducts"), {
+  ssr: false,
+});
+const TotalSell = dynamic(() => import("./seller/TotalSell"), { ssr: false });
+const SellerProfile = dynamic(() => import("./seller/SellerProfile"), {
+  ssr: false,
+});
+
+const UserProfile = dynamic(() => import("./user/UserProfile"), { ssr: false });
+
+const AdminProfile = dynamic(() => import("./admin/AdminProfile"), {
+  ssr: false,
+});
+const SellerRequest = dynamic(() => import("./admin/SellerRequest"), {
+  ssr: false,
+});
+const TotalSellers = dynamic(() => import("./admin/TotalSellers"), {
+  ssr: false,
+});
+const TotalUsers = dynamic(() => import("./admin/TotalUsers"), { ssr: false });
 
 export default function DashboardLayout() {
   const [activeRoute, setActiveRoute] = useState("profile");
-  const [role] = useState("admin");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const role = user?.role;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/api/user/me");
+        setUser(res.data.user);
+      } catch (err) {
+        console.error(
+          "Error fetching user:",
+          err.response?.data || err.message
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <span className="loading loading-dots loading-xl"></span>
+      </div>
+    );
 
   const renderContent = () => {
     if (role === "admin") {
@@ -32,7 +79,7 @@ export default function DashboardLayout() {
         default:
           return <AdminProfile />;
       }
-    } else if(role === "seller"){
+    } else if (role === "seller") {
       switch (activeRoute) {
         case "profile":
           return <SellerProfile />;
@@ -45,7 +92,7 @@ export default function DashboardLayout() {
         default:
           return <SellerProfile />;
       }
-    }else{
+    } else {
       switch (activeRoute) {
         case "profile":
           return <UserProfile />;
@@ -62,7 +109,7 @@ export default function DashboardLayout() {
   };
 
   return (
-    <div className=" min-h-screen bg-gray-300">
+    <div className="min-h-screen bg-gray-300">
       <div className="container mx-auto px-4 flex p-8">
         <Sidebar
           role={role}

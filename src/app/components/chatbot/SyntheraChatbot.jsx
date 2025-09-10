@@ -37,28 +37,62 @@ export default function SyntheraChatbot() {
       scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, open]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // append local user message (demo only)
+    const userMessage = input.trim();
     setMessages((s) => [
       ...s,
-      { id: Date.now(), role: "user", text: input.trim() },
+      { id: Date.now(), role: "user", text: userMessage },
     ]);
     setInput("");
 
-    // demo bot reply (fake) — shows how a response would appear
-    setTimeout(() => {
+    // Add loading state message
+    const loadingId = Date.now() + 1;
+    setMessages((s) => [
+      ...s,
+      { id: loadingId, role: "bot", text: "Typing..." },
+    ]);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      const data = await response.json();
+
+      // Remove loading
+      setMessages((s) => s.filter((m) => m.id !== loadingId));
+
+      if (data.reply) {
+        setMessages((s) => [
+          ...s,
+          { id: Date.now() + 2, role: "bot", text: data.reply },
+        ]);
+      } else {
+        setMessages((s) => [
+          ...s,
+          {
+            id: Date.now() + 3,
+            role: "bot",
+            text: "Sorry, I couldn't understand.",
+          },
+        ]);
+      }
+    } catch (error) {
+      setMessages((s) => s.filter((m) => m.id !== loadingId));
       setMessages((s) => [
         ...s,
         {
-          id: Date.now() + 1,
+          id: Date.now() + 4,
           role: "bot",
-          text: "Nice choice — (demo reply).",
+          text: "Oops! Something went wrong.",
         },
       ]);
-    }, 700);
+    }
   };
 
   return (
@@ -73,9 +107,13 @@ export default function SyntheraChatbot() {
               </div>
               <div>
                 <div className="text-sm font-semibold">Synthera AI</div>
+<<<<<<< HEAD
                 <div className="text-xs text-gray-500">
                   Shopping assistant 
                 </div>
+=======
+                <div className="text-xs text-gray-500">Shopping assistant</div>
+>>>>>>> d882f03f04e562caeca2d9d3fafff461e3074ce9
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -90,9 +128,9 @@ export default function SyntheraChatbot() {
           </header>
 
           <main className="p-3 flex-1 overflow-y-auto space-y-3">
-            {messages.map((m) => (
+            {messages.map((m , idx) => (
               <div
-                key={m.id}
+                key={idx}
                 className={`flex ${
                   m.role === "user" ? "justify-end" : "justify-start"
                 }`}
@@ -139,6 +177,7 @@ export default function SyntheraChatbot() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
+        title="Synthere ChatBot"
         aria-label="Open Synthera chat"
         className={`w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-lg font-semibold hover:scale-105 transition ${
           open && "hidden"

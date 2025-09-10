@@ -14,55 +14,36 @@ import Swal from "sweetalert2";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const session = useSession();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-    const result = await signIn("credentials", {
+    const res = await signIn("credentials", {
+      redirect: false,
       email,
       password,
-      redirect: false,
-      callbackUrl: "/",
     });
 
-    if (result?.error) {
+    if (res?.error) {
       Swal.fire({
         icon: "error",
-        title: "Login Failed",
-        text: "Invalid email or password. Please try again.",
+        title: "Error",
+        text: "Invalid username or password!",
       });
     } else {
       Swal.fire({
         icon: "success",
-        title: "Login Successful",
-        text: "Welcome back!",
-        timer: 1500,
+        title: "Success!",
+        text: "Logged in successfully!",
+        timer: 2000,
         showConfirmButton: false,
-      }).then(() => {
-        router.push("/");
       });
-    }
-  };
-
-  const handleSocialLogin = async (providerName) => {
-    signIn(providerName);
-  };
-
-  useEffect(() => {
-    if (session?.status == "authenticated") {
       router.push("/");
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        text: "Welcome!",
-        timer: 1500,
-        showConfirmButton: false,
-      });
     }
-  }, [session?.status]);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -88,13 +69,11 @@ export default function LoginPage() {
               <h3 className="text-2xl font-bold sm:text-3xl text-black">
                 Welcome Back
               </h3>
-              <p className="text-gray-800 mb-3">
-                Please login to your account
-              </p>
+              <p className="text-gray-800 mb-3">Please login to your account</p>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="email"
               name="email"
@@ -114,7 +93,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute cursor-pointer right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -129,7 +108,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600"
+              className="w-full cursor-pointer bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600"
             >
               Login
             </button>
@@ -141,24 +120,15 @@ export default function LoginPage() {
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
 
-          <div className="flex space-x-4">
+          <div className="flex ">
             <button
               onClick={() => {
                 handleSocialLogin("google");
               }}
-              className="flex-1 flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
+              className="flex-1 cursor-pointer flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
             >
               <FaGoogle className="w-5 h-5 mr-2 text-red-500" />
               Google
-            </button>
-            <button
-              onClick={() => {
-                handleSocialLogin("github");
-              }}
-              className="flex-1 text-black flex items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
-            >
-              <FaGithub className="w-5 h-5 mr-2 text-gray-900" />
-              GitHub
             </button>
           </div>
 

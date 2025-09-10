@@ -3,11 +3,12 @@ import { useState, use } from "react";
 import products from "@/../public/product.json";
 import useAddToCart from "@/app/hooks/useAddToCart";
 import { Toaster } from "react-hot-toast";
+import useWishlist from "@/app/hooks/useWishlist";
 
 export default function ProductDetails({ params: paramsPromise }) {
   const params = use(paramsPromise); // unwrap the promise
   const { id } = params;
-
+  const { addToWishlist } = useWishlist();
   const product = products.find((p) => p.productId.toString() === id);
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || "");
@@ -131,7 +132,15 @@ export default function ProductDetails({ params: paramsPromise }) {
           >
             Add to Cart
           </button>
-          <button className="border px-5 py-2 rounded">Wishlist</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              addToWishlist(product);
+            }}
+            className="border px-5 py-2 rounded"
+          >
+            Wishlist
+          </button>
         </div>
       </div>
     </div>
