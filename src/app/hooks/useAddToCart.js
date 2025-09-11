@@ -18,7 +18,7 @@ export default function useAddToCart() {
       thumbnail: product.thumbnail,
       size: selectedSize,
       quantity,
-      price: product.discountPrice,
+      price: product.price || product.discountPrice,
     };
 
     try {

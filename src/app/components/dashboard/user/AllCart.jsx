@@ -4,16 +4,29 @@ import { motion } from "framer-motion";
 import { Trash2, ShoppingBag } from "lucide-react";
 import useCart from "@/app/hooks/useCart";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 export default function AllCart() {
   const { cartItems, loading, removeItem } = useCart();
   const { data: session } = useSession();
-if (!session) {
-  return <p className="p-4 text-gray-500">Please login to view your cart.</p>;
-}
+
+  if (!session) {
+    return <p className="p-4 text-gray-500">Please login to view your cart.</p>;
+  }
 
   if (loading) return <p>Loading cart...</p>;
   if (!cartItems.length) return <p>Your cart is empty</p>;
+
+  // handle remove with toast
+  const handleRemove = async (id) => {
+    try {
+      await removeItem(id);
+      toast.success("Product removed from cart!");
+    } catch (error) {
+      toast.error("Failed to remove product.");
+      console.error(error);
+    }
+  };
 
   return (
     <motion.div
@@ -51,8 +64,12 @@ if (!session) {
                 />
               </td>
               <td className="p-3 font-medium">{item.title}</td>
-              <td className="p-3 text-yellow-600 font-semibold">${item.price}</td>
-              <td className="p-3 text-gray-400">{new Date(item.addedAt).toLocaleDateString()}</td>
+              <td className="p-3 text-yellow-600 font-semibold">
+                ${item.price}
+              </td>
+              <td className="p-3 text-gray-400">
+                {new Date(item.addedAt).toLocaleDateString()}
+              </td>
               <td className="p-3 text-center">
                 <div className="flex justify-end gap-3">
                   <motion.button className="bg-green-500 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-600 transition">
@@ -60,7 +77,7 @@ if (!session) {
                     Buy Now
                   </motion.button>
                   <motion.button
-                    onClick={() => removeItem(item._id)}
+                    onClick={() => handleRemove(item._id)}
                     className="bg-red-500 text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-red-600 transition"
                   >
                     <Trash2 size={18} />
@@ -80,7 +97,8 @@ if (!session) {
         className="mt-6 flex justify-between items-center bg-[#296dc5] p-4 rounded-lg"
       >
         <span className="font-semibold text-gray-300">
-          Total Items: <span className="text-yellow-500"> {cartItems.length}</span>
+          Total Items:{" "}
+          <span className="text-yellow-500"> {cartItems.length}</span>
         </span>
         <span className="text-lg font-bold text-gray-200">
           Total:{" "}

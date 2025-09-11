@@ -30,6 +30,7 @@ export default function RootLayout({ children }) {
         <NextAuthProvider>
           <ReactQueryProvider>
             <ClientProviders>{children}</ClientProviders>
+            
           </ReactQueryProvider>
         </NextAuthProvider>
       </body>
