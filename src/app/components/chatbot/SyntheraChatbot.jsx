@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import bot from "../../assets/synthera_bot.png";
+// import bot from "../../assets/synthera_bot.png";
 import { RiChatAiFill } from "react-icons/ri";
 
 export default function SyntheraChatbot() {
@@ -103,7 +103,7 @@ export default function SyntheraChatbot() {
           <header className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800">
             <div className="flex items-center gap-3">
               <div className="border rounded-full p-2 border-primary">
-                <Image src={bot} alt="synthera-bot" className="w-8" />
+                <Image src="/synthera_bot.png" alt="synthera-bot" className="w-8" />
               </div>
               <div>
                 <div className="text-sm font-semibold">Synthera AI</div>
