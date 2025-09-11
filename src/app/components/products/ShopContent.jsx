@@ -1,7 +1,7 @@
 import ProductGrid from "./ProductGrid";
 
 export default async function ShopContent() {
-  const res = await fetch("http://localhost:3000/api/products", { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products`, { cache: "no-store" });
   const data = await res.json();
 
   // ✅ Extract products from response
