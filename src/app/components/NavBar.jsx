@@ -13,7 +13,7 @@ const NavBar = () => {
   const navItems = (
     <>
       <li><Link className='bg-base-200' href="/" >Home</Link></li>
-      <li><Link className='bg-base-200' href="/Shop">Products</Link></li>
+      <li><Link className='bg-base-200' href="/Products">Products</Link></li>
       <li><Link className='bg-base-200' href="/dashboard">Dashboard</Link></li>
        <li><Link className='bg-base-200' href="/" >Synthera AI</Link></li>
     </>

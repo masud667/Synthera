@@ -34,7 +34,7 @@ const { addToWishlist } = useWishlist();
       <Toaster position="top-right" />
 
       {/* Product Card */}
-      <div className="shadow-md rounded-md w-[250px] relative group p-4 cursor-pointer">
+      <div className="shadow-md bg-gray-100 rounded-md w-[250px] relative group p-4 cursor-pointer">
         <div className="relative bg-[#E1E4E9] rounded-md p-3">
           <img src={activeImage} alt={title} className="w-full h-[250px] object-contain" />
 
