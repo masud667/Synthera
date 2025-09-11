@@ -8,8 +8,8 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 
-import logo from "../../assets/synthera_logo.png";
-import shopImg from "../../assets/shop_img3.png";
+// import logo from "../../assets/synthera_logo.png";
+// import shopImg from "../../assets/shop_img3.png";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -111,13 +111,13 @@ export default function RegisterPage() {
             collections, track orders, and personalize your online store
             experience.
           </p>
-          <Image src={shopImg} alt="Characters" className="w-96" />
+          <Image src="/shop_img3.png" alt="Characters" className="w-96" />
         </div>
 
         {/* Right Section */}
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <div className="text-center">
-            <Image src={logo} width={80} className="mx-auto w-44" alt="logo" />
+            <Image src="/synthera_logo.png" width={80} className="mx-auto w-44" alt="logo" />
             <div className="mt-2 space-y-2">
               <h3 className="text-2xl font-bold sm:text-3xl text-black">
                 Create Your Account
