@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <>
       <HeroBanner />
-       <ShopContent></ShopContent>
       <Categories></Categories>
       <OffersSection />
     </>
