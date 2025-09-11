@@ -1,7 +1,7 @@
-# 🛍️ Synthera – Upgrade Your Wardrobe
+# 🛍️ Synthera – Shop with Ai & Upgrade Your Wardrobe
 
-![Homepage Screenshot](https://i.ibb.co.com/1JwspLVr/syn.png)  
-![Dashboard Screenshot](https://i.ibb.co.com/ymq3YJhG/synd.png)
+![Homepage](https://i.ibb.co.com/1JwspLVr/syn.png)  
+![Dashboard](https://i.ibb.co.com/ymq3YJhG/synd.png)
 
 **Live Demo:** [Synthera Online Shop](https://synthera-online-shop.vercel.app/)
 
@@ -92,4 +92,5 @@ The project features **user authentication, seller dashboards, admin controls, d
 ```bash
 git clone https://github.com/your-username/synthera-online-shop.git
 cd synthera-online-shop
+
 ```
