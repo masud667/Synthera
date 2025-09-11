@@ -3,7 +3,7 @@
 import ThemeToggle from "../components/ThemeToggle";
 import React, { useState } from "react";
 import Image from "next/image";
-import logo from "../assets/synthera_logo.png";
+import logo from "/public/synthera_logo.png";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -29,7 +29,7 @@ const NavBar = () => {
           {/* Navbar Start */}
           <div className="navbar-start">
             <Link href="/">
-              <Image src={logo} alt="Synthera Logo" className="w-28" />
+              <Image src={logo} alt="Synthera Logo" className="w-28 lg:w-44" />
             </Link>
           </div>
 
