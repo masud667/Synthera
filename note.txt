@@ -1,0 +1,5 @@
+--suggestion for our site from touhidur vaii--
+
+1. notification system
+2. email veryfication
+3. payment getway

@@ -4,34 +4,6 @@ import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 import axios from "axios";
 
-// Mock data
-const usersData = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    email: "alicej@example.com",
-    date: "2025-09-01",
-  },
-  {
-    id: 2,
-    name: "Bob Williams",
-    email: "bobw@example.com",
-    date: "2025-09-03",
-  },
-  {
-    id: 3,
-    name: "Charlie Brown",
-    email: "charlieb@example.com",
-    date: "2025-09-05",
-  },
-  {
-    id: 4,
-    name: "Diana Smith",
-    email: "dianas@example.com",
-    date: "2025-09-06",
-  },
-];
-
 export default function TotalUsers() {
   const [search, setSearch] = useState("");
   const [sortRecent, setSortRecent] = useState(false);
@@ -52,22 +24,19 @@ export default function TotalUsers() {
         setLoading(false);
       }
     };
-
     fetchUser();
   }, []);
 
-  const totalUsers = user?.filter((res) => res.role === "user");
+  const totalUsers = user?.filter((res) => res.role === "user") || [];
 
   // Filtered and sorted users
-const filteredUsers = totalUsers
-  ?.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
-  )
-  .sort((a, b) =>
-    sortRecent
-      ? new Date(b.createdAt) - new Date(a.createdAt) 
-      : new Date(a.createdAt) - new Date(b.createdAt)
-  );
+  const filteredUsers = totalUsers
+    .filter((user) => user.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) =>
+      sortRecent
+        ? new Date(b.createdAt) - new Date(a.createdAt)
+        : new Date(a.createdAt) - new Date(b.createdAt)
+    );
 
   if (loading)
     return (
@@ -110,41 +79,73 @@ const filteredUsers = totalUsers
         </div>
       </div>
 
-      {/* Users Table */}
-      <table className="min-w-full border-collapse">
-        <thead>
-          <tr className="bg-[#2564b6] text-left text-gray-200">
-            <th className="p-3">User Name</th>
-            <th className="p-3">Email</th>
-            <th className="p-3">Registered Date</th>
-            <th className="p-3 text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.map((user, index) => (
-            <motion.tr
-              key={user._id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="border-b last:border-none bg-[#1b4a88] hover:bg-[#1f569c] transition-colors text-gray-200"
-            >
-              <td className="p-3 font-medium">{user.name}</td>
-              <td className="p-3">{user.email}</td>
-              <td className="p-3 text-gray-300">{user.createdAt.slice(0,10)}</td>
-              <td className="p-3 flex justify-center">
+      {/* Table layout for XL screens */}
+      <div className="hidden xl:block">
+        <table className="min-w-full border-collapse">
+          <thead>
+            <tr className="bg-[#2564b6] text-left text-gray-200">
+              <th className="p-3">User Name</th>
+              <th className="p-3">Email</th>
+              <th className="p-3">Registered Date</th>
+              <th className="p-3 text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user, index) => (
+              <motion.tr
+                key={user._id}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="border-b last:border-none bg-[#1b4a88] hover:bg-[#1f569c] transition-colors text-gray-200"
+              >
+                <td className="p-3 font-medium">{user.name}</td>
+                <td className="p-3">{user.email}</td>
+                <td className="p-3 text-gray-300">
+                  {user.createdAt.slice(0, 10)}
+                </td>
+                <td className="p-3 flex justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-red-500 cursor-pointer text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-red-600 transition"
+                  >
+                    <Trash2 size={18} /> Delete User
+                  </motion.button>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile layout: stacked cards */}
+      <div className="xl:hidden flex flex-col gap-4">
+        {filteredUsers.map((user, index) => (
+          <motion.div
+            key={user._id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="bg-[#1b4a88] p-4 rounded-lg shadow hover:bg-[#1f569c] transition-colors text-gray-200"
+          >
+            <div className="flex flex-col gap-2">
+              <h3 className="font-medium text-lg">{user.name}</h3>
+              <p className="text-gray-300 text-sm">{user.email}</p>
+              <p className="text-gray-400 text-sm">
+                Registered: {user.createdAt.slice(0, 10)}
+              </p>
+              <div className="mt-2 flex justify-end">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   className="bg-red-500 cursor-pointer text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-red-600 transition"
                 >
-                  <Trash2 size={18} />
-                  Delete User
+                  <Trash2 size={18} /> Delete User
                 </motion.button>
-              </td>
-            </motion.tr>
-          ))}
-        </tbody>
-      </table>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
 
       {/* No users found */}
       {filteredUsers.length === 0 && (

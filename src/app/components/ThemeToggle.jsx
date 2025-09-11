@@ -22,9 +22,9 @@ if (!mounted || !theme) return null;
       aria-label="Toggle Theme"
     >
       {theme === "light" ? (
-        <Moon className="h-6 w-6 text-gray-700" />
+        <Moon className="h-4 w-4 lg:h-6 lg:w-6 text-gray-700" />
       ) : (
-        <Sun className="h-6 w-6 text-yellow-400" />
+        <Sun className="h-4 w-4 lg:h-6 lg:w-6 text-yellow-400" />
       )}
     </button>
   );
