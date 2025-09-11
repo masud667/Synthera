@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
+  Heart,
   ShoppingCart,
   Package,
   Clock,
@@ -23,6 +24,7 @@ export default function Sidebar({ role, activeRoute, setActiveRoute }) {
   const userLinks = [
     { name: "Profile", key: "profile", icon: Home },
     { name: "All Cart", key: "all-cart", icon: ShoppingCart },
+    { name: "Wishlist", key: "wishlist", icon: Heart },
     { name: "Ordered Items", key: "ordered-item", icon: Package },
     { name: "Pending Delivery", key: "pending-delivery", icon: Clock },
   ];
@@ -52,13 +54,13 @@ export default function Sidebar({ role, activeRoute, setActiveRoute }) {
   return (
     <>
       {/* Mobile Header */}
-      <div className="md:hidden text-[#1b4c8b]  flex justify-between items-center absolute">
+      <div className="md:hidden text- bg-[#2a67b6] rounded-full p-1  flex justify-between items-center absolute top-[5rem]">
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open Menu"
           className=" cursor-pointer"
         >
-          <FaArrowRight size={20} />
+          <FaArrowRight size={20} className="text-white"/>
         </button>
       </div>
 

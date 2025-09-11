@@ -20,8 +20,8 @@ const { addToWishlist } = useWishlist();
     variants,
     description,
     rating,
-    productId,
-    // _id
+  _id
+  
   } = product;
 
   const [activeImage, setActiveImage] = useState(thumbnail);
@@ -34,7 +34,7 @@ const { addToWishlist } = useWishlist();
       <Toaster position="top-right" />
 
       {/* Product Card */}
-      <div className="shadow-md rounded-md w-[250px] relative group p-4 cursor-pointer">
+      <div className="shadow-md bg-gray-100 rounded-md w-[250px] relative group p-4 cursor-pointer">
         <div className="relative bg-[#E1E4E9] rounded-md p-3">
           <img src={activeImage} alt={title} className="w-full h-[250px] object-contain" />
 
@@ -44,7 +44,7 @@ const { addToWishlist } = useWishlist();
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                router.push(`/Products/${productId}`);
+                router.push(`/Products/${_id}`);
               }}
               className="bg-white p-2 rounded-full hover:scale-110 transition"
             >

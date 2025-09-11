@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NextAuthProvider from "@/providers/NextAuthProvider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import ClientProviders from "./components/clientProvider/ClientProviders";
 
 const inter = Inter({
@@ -19,33 +21,20 @@ export const metadata = {
     "fashion trends",
   ],
   authors: [{ name: "Synthera Team" }],
-  openGraph: {
-    title: "Synthera – Upgrade Your Wardrobe",
-    description:
-      "Discover fashion powered by AI. Synthera helps you upgrade your wardrobe with personalized recommendations.",
-    url: "https://Synthera.com",
-    siteName: "Synthera",
-    images: [
-      {
-        url: "https://Synthera.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Synthera Fashion Preview",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${inter.variable} antialiased`}
-        cz-shortcut-listen="true"
+        suppressHydrationWarning
       >
-        <ClientProviders>{children}</ClientProviders>
+        <NextAuthProvider>
+          <ReactQueryProvider>
+            <ClientProviders>{children}</ClientProviders>
+          </ReactQueryProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

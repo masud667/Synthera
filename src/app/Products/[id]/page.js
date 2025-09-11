@@ -1,24 +1,42 @@
 "use client";
-import { useState, use } from "react";
-import products from "@/../public/product.json";
+import { useState, useEffect, use } from "react";
 import useAddToCart from "@/app/hooks/useAddToCart";
-import { Toaster } from "react-hot-toast";
 import useWishlist from "@/app/hooks/useWishlist";
+import { Toaster } from "react-hot-toast";
 
-export default function ProductDetails({ params: paramsPromise }) {
-  const params = use(paramsPromise); // unwrap the promise
+export default function ProductDetails({ params:paramsPromise}) {
+  const params = use(paramsPromise);  
+  
   const { id } = params;
-  const { addToWishlist } = useWishlist();
-  const product = products.find((p) => p.productId.toString() === id);
-
-  const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || "");
-  const [quantity, setQuantity] = useState(1);
 
   const { addToCart } = useAddToCart();
+  const { addToWishlist } = useWishlist();
 
-  if (!product) {
-    return <h1 className="p-6">Product not found</h1>;
-  }
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const [selectedSize, setSelectedSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
+ 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`/api/products/${id}`);
+        const data = await res.json();
+        setProduct(data);
+        setSelectedSize(data.sizes?.[0] || "");
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <h1 className="p-6">Loading product...</h1>;
+  if (!product) return <h1 className="p-6">Product not found</h1>;
 
   const handleQuantityChange = (value) => {
     if (value < 1) return;
@@ -40,7 +58,7 @@ export default function ProductDetails({ params: paramsPromise }) {
         </div>
 
         <div className="grid grid-cols-4 gap-3 mt-6 w-full md:w-[450px]">
-          {product.images.map((subImg, index) => (
+          {product.images?.map((subImg, index) => (
             <div
               key={index}
               className="w-full h-24 bg-[#F5F5F5] rounded-md p-1 hover:scale-105 transition-transform cursor-pointer flex items-center justify-center"
@@ -73,7 +91,7 @@ export default function ProductDetails({ params: paramsPromise }) {
         <div className="mt-4">
           <h3 className="font-semibold">Sizes</h3>
           <div className="flex gap-2 mt-2 flex-wrap">
-            {product.sizes.map((size) => (
+            {product.sizes?.map((size) => (
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
@@ -117,10 +135,10 @@ export default function ProductDetails({ params: paramsPromise }) {
         <div className="mt-6">
           <h3 className="font-semibold">Specifications</h3>
           <ul className="list-disc pl-5 text-gray-600 mt-2">
-            <li>Closure: {product.specifications.closure}</li>
-            <li>Sole: {product.specifications.sole}</li>
-            <li>Width: {product.specifications.width}</li>
-            <li>Material: {product.specifications.outerMaterial}</li>
+            <li>Closure: {product.specifications?.closure}</li>
+            <li>Sole: {product.specifications?.sole}</li>
+            <li>Width: {product.specifications?.width}</li>
+            <li>Material: {product.specifications?.outerMaterial}</li>
           </ul>
         </div>
 

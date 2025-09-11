@@ -26,10 +26,10 @@ module.exports = {
       },
       {
         dark: {
-          "primary": "#6366f1",   // Indigo-500
-          "secondary": "#db2777", // Pink-600
-          "accent": "#fbbf24",    // Amber-400
-          "neutral": "#111827",   // Gray-900
+          "primary": "#6366f1",   
+          "secondary": "#db2777",
+          "accent": "#fbbf24",  
+          "neutral": "#111827", 
           "base-100": "#1f2937",
         },
       },
