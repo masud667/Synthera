@@ -11,7 +11,6 @@ export default function Home() {
       <HeroBanner />
        <ShopContent></ShopContent>
       <Categories></Categories>
-      <TrendingProducts></TrendingProducts>
       <OffersSection />
     </>
   )
