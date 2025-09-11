@@ -31,7 +31,9 @@
     "react-slick": "^0.31.0",
     "recharts": "^3.1.2",
     "slick-carousel": "^1.8.1",
-    "sweetalert2": "^11.23.0"
+    "sweetalert2": "^11.23.0",
+    "lightningcss": "1.27.0"
+
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
