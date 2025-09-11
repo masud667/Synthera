@@ -1,0 +1,232 @@
+[
+  {
+    "productId": "1",
+    "title": "Men's Casual Jacket",
+    "description": "Lightweight and comfortable casual jacket suitable for daily wear.",
+    "category": "Jackets",
+    "brand": "AlphaWear",
+    "price": 79.99,
+    "discountPrice": 69.99,
+    "thumbnail": "https://i.ibb.co.com/B2J7NL84/jacket-1.png",
+    "sizes": ["S", "M", "L", "XL"],
+    "images": [
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg"
+    ],
+    "variants": [
+      {
+        "color": "Black",
+        "sizes": [{"size":"S","stock":5},{"size":"M","stock":10},{"size":"L","stock":7},{"size":"XL","stock":3}],
+        "image": "https://i.ibb.co.com/B2J7NL84/jacket-1.png"
+      },
+      {
+        "color": "Blue",
+        "sizes": [{"size":"S","stock":4},{"size":"M","stock":7},{"size":"L","stock":5},{"size":"XL","stock":2}],
+        "image": "https://i.ibb.co.com/N29cQ1DY/jacket-2.png"
+      }
+    ],
+    "specifications": {
+      "closure": "Hook & Loop",
+      "sole": "Polyvinyl Chloride",
+      "width": "Medium",
+      "outerMaterial": "A-Grade Standard Quality",
+      "materialCare": "Wipe with clean cloth"
+    },
+    "rating": {"average":4.5,"count":120},
+    "gender": "Men",
+    "createdAt":"2025-09-06T12:00:00.000Z",
+    "updatedAt":"2025-09-06T12:00:00.000Z"
+  },
+  {
+    "productId": "2",
+    "title": "Women's Winter Jacket",
+    "description": "Warm winter jacket designed for comfort and style.",
+    "category": "Jackets",
+    "brand": "BellaWear",
+    "price": 99.99,
+    "discountPrice": 89.99,
+    "thumbnail": "https://i.ibb.co.com/N29cQ1DY/jacket-2.png",
+    "sizes": ["S", "M", "L", "XL"],
+    "images": [
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg"
+    ],
+    "variants": [
+      {
+        "color": "Red",
+        "sizes": [{"size":"S","stock":8},{"size":"M","stock":5},{"size":"L","stock":2},{"size":"XL","stock":1}],
+        "image": "https://i.ibb.co.com/tT7WcFrd/jacket-3.png"
+      },
+      {
+        "color": "Green",
+        "sizes": [{"size":"S","stock":6},{"size":"M","stock":4},{"size":"L","stock":3},{"size":"XL","stock":2}],
+        "image": "https://i.ibb.co.com/MxcSchZQ/jacket-4.png"
+      }
+    ],
+    "specifications": {
+      "closure": "Zipper",
+      "sole": "Polyester",
+      "width": "Medium",
+      "outerMaterial": "Premium Fabric",
+      "materialCare": "Hand wash recommended"
+    },
+    "rating": {"average":4.7,"count":95},
+    "gender": "Women",
+    "createdAt":"2025-09-06T12:10:00.000Z",
+    "updatedAt":"2025-09-06T12:10:00.000Z"
+  },
+  {
+    "productId": "3",
+    "title": "Men's Sports Jacket",
+    "description": "Breathable and lightweight jacket for outdoor sports.",
+    "category": "Jackets",
+    "brand": "SportyX",
+    "price": 85.50,
+    "discountPrice": 75.50,
+    "thumbnail": "https://i.ibb.co.com/tT7WcFrd/jacket-3.png",
+    "sizes": ["S", "M", "L", "XL"],
+    "images": [
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg"
+    ],
+    "variants": [
+      {
+        "color": "Grey",
+        "sizes": [{"size":"S","stock":5},{"size":"M","stock":15},{"size":"L","stock":10},{"size":"XL","stock":5}],
+        "image": "https://i.ibb.co.com/MxcSchZQ/jacket-4.png"
+      }
+    ],
+    "specifications": {
+      "closure": "Hook & Loop",
+      "sole": "Polyvinyl Chloride",
+      "width": "Medium",
+      "outerMaterial": "A-Grade Standard Quality",
+      "materialCare": "Machine washable"
+    },
+    "rating": {"average":4.2,"count":80},
+    "gender": "Men",
+    "createdAt":"2025-09-06T12:20:00.000Z",
+    "updatedAt":"2025-09-06T12:20:00.000Z"
+  },
+  {
+    "productId": "4",
+    "title": "Women's Casual Jacket",
+    "description": "Trendy casual jacket for daily use and outings.",
+    "category": "Jackets",
+    "brand": "FemStyle",
+    "price": 69.99,
+    "discountPrice": 59.99,
+    "thumbnail": "https://i.ibb.co.com/MxcSchZQ/jacket-4.png",
+    "sizes": ["S", "M", "L", "XL"],
+    "images": [
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg"
+    ],
+    "variants": [
+      {
+        "color": "Pink",
+        "sizes": [{"size":"S","stock":12},{"size":"M","stock":8},{"size":"L","stock":5},{"size":"XL","stock":3}],
+        "image": "https://i.ibb.co.com/b91KVbn/jacket-5.png"
+      },
+      {
+        "color": "Beige",
+        "sizes": [{"size":"S","stock":7},{"size":"M","stock":5},{"size":"L","stock":2},{"size":"XL","stock":1}],
+        "image": "https://i.ibb.co.com/C5PnS5Fp/jacket-6.png"
+      }
+    ],
+    "specifications": {
+      "closure": "Zipper",
+      "sole": "Polyester",
+      "width": "Medium",
+      "outerMaterial": "High-Quality Fabric",
+      "materialCare": "Hand wash recommended"
+    },
+    "rating": {"average":4.6,"count":110},
+    "gender": "Women",
+    "createdAt":"2025-09-06T12:30:00.000Z",
+    "updatedAt":"2025-09-06T12:30:00.000Z"
+  },
+  {
+    "productId": "5",
+    "title": "Men's Leather Jacket",
+    "description": "Premium leather jacket for a stylish look and durability.",
+    "category": "Jackets",
+    "brand": "LeatherPro",
+    "price": 120.00,
+    "discountPrice": 110.00,
+    "thumbnail": "https://i.ibb.co.com/b91KVbn/jacket-5.png",
+    "sizes": ["S", "M", "L", "XL"],
+    "images": [
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg"
+    ],
+    "variants": [
+      {
+        "color": "Brown",
+        "sizes": [{"size":"S","stock":5},{"size":"M","stock":3},{"size":"L","stock":1},{"size":"XL","stock":0}],
+        "image": "https://i.ibb.co.com/C5PnS5Fp/jacket-6.png"
+      }
+    ],
+    "specifications": {
+      "closure": "Zipper",
+      "sole": "Leather",
+      "width": "Medium",
+      "outerMaterial": "Genuine Leather",
+      "materialCare": "Use leather cleaner"
+    },
+    "rating": {"average":4.8,"count":70},
+    "gender": "Men",
+    "createdAt":"2025-09-06T12:40:00.000Z",
+    "updatedAt":"2025-09-06T12:40:00.000Z"
+  },
+  {
+    "productId": "6",
+    "title": "Women's Denim Jacket",
+    "description": "Classic denim jacket suitable for casual outings and layering.",
+    "category": "Jackets",
+    "brand": "DenimQueen",
+    "price": 59.99,
+    "discountPrice": 49.99,
+    "thumbnail": "https://i.ibb.co.com/C5PnS5Fp/jacket-6.png",
+    "sizes": ["S", "M", "L", "XL"],
+    "images": [
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/27.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg",
+      "https://maraviyainfotech.com/projects/mantu-html/assets/img/product/29.jpg"
+    ],
+    "variants": [
+      {
+        "color": "Light Blue",
+        "sizes": [{"size":"S","stock":10},{"size":"M","stock":6},{"size":"L","stock":3},{"size":"XL","stock":2}],
+        "image": "https://i.ibb.co.com/B2J7NL84/jacket-1.png"
+      },
+      {
+        "color": "Dark Blue",
+        "sizes": [{"size":"S","stock":8},{"size":"M","stock":5},{"size":"L","stock":2},{"size":"XL","stock":1}],
+        "image": "https://i.ibb.co.com/N29cQ1DY/jacket-2.png"
+      }
+    ],
+    "specifications": {
+      "closure": "Button",
+      "sole": "Denim",
+      "width": "Medium",
+      "outerMaterial": "High-Quality Denim",
+      "materialCare": "Machine washable"
+    },
+    "rating": {"average":4.4,"count":90},
+    "gender": "Women",
+    "createdAt":"2025-09-06T12:50:00.000Z",
+    "updatedAt":"2025-09-06T12:50:00.000Z"
+  }
+]
