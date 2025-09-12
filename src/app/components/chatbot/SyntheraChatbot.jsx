@@ -78,21 +78,10 @@ export default function SyntheraChatbot() {
                 <Image src="/synthera_bot.png" alt="synthera-bot" className="w-8" />
               </div>
               <div>
-<<<<<<< HEAD
-                <div className="text-sm font-semibold">Synthera AI</div>
-<<<<<<< HEAD
-                <div className="text-xs text-gray-500">
-                  Shopping assistant 
-                </div>
-=======
-                <div className="text-xs text-gray-500">Shopping assistant</div>
->>>>>>> d882f03f04e562caeca2d9d3fafff461e3074ce9
-=======
                 <div className="text-sm font-semibold text-gray-200">
                   Synthera AI
                 </div>
                 <div className="text-xs text-[#37B6FF]">Shopping assistant</div>
->>>>>>> e9657a69a0d694e13849b17f1efba87a2129e1d6
               </div>
             </div>
             <button
