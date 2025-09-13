@@ -7,15 +7,37 @@ import logo from "../assets/synthera_logo.png";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 const NavBar = () => {
-  const { data: session ,status} = useSession();
-  
+  const { data: session, status } = useSession();
 
   const navItems = (
     <>
-      <li><Link className='bg-base-200' href="/" >Home</Link></li>
-      <li><Link className='bg-base-200' href="/Products">Products</Link></li>
-      <li><Link className='bg-base-200' href="/dashboard">Dashboard</Link></li>
-       <li><Link className='bg-base-200' href="/" >Synthera AI</Link></li>
+      <li>
+        <Link className="bg-base-200" href="/">
+          Home
+        </Link>
+      </li>
+      <li>
+        <Link className="bg-base-200" href="/Products">
+          Products
+        </Link>
+      </li>
+      <li>
+        <Link className="bg-base-200" href="/dashboard">
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <Link className="bg-base-200" href="/">
+          Synthera AI
+        </Link>
+      </li>
+      {session && (
+        <li>
+          <Link className="bg-base-200" href="/become-seller">
+            Become Seller
+          </Link>
+        </li>
+      )}
     </>
   );
 
@@ -25,15 +47,16 @@ const NavBar = () => {
         <div className="navbar">
           {/* Navbar Start */}
           <div className="navbar-start">
-          
-<a href="/">
-  <Image src={logo} alt="Synthera Logo" width={176} height={44} />
-</a>
+            <a href="/">
+              <Image src={logo} alt="Synthera Logo" width={176} height={44} />
+            </a>
           </div>
 
           {/* Navbar Center */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 space-x-3 font-bold">{navItems}</ul>
+            <ul className="menu menu-horizontal px-1 space-x-3 font-bold">
+              {navItems}
+            </ul>
           </div>
 
           {/* Navbar End */}
@@ -54,9 +77,8 @@ const NavBar = () => {
               </Link>
             )}
           </div>
-  <ThemeToggle />
+          <ThemeToggle />
         </div>
-      
       </div>
     </div>
   );

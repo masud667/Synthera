@@ -80,9 +80,9 @@ export default function RegisterPage() {
       });
     }
   };
-
-  const handleSocialLogin = () => {
-    console.log("trying to log in with google");
+  
+  const handleSocialLogin = async (providerName) => {
+    signIn(providerName);
   };
 
   useEffect(() => {
@@ -175,10 +175,10 @@ export default function RegisterPage() {
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
 
-          <div className="flex">
+          <div className="flex ">
             <button
               onClick={() => {
-                handleSocialLogin();
+                handleSocialLogin("google");
               }}
               className="flex-1 cursor-pointer flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
             >

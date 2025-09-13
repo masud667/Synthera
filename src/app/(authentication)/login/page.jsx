@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+   const session = useSession();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,6 +45,23 @@ export default function LoginPage() {
       router.push("/");
     }
   };
+  
+   const handleSocialLogin = async (providerName) => {
+    signIn(providerName);
+  };
+
+  useEffect(() => {
+    if (session?.status == "authenticated") {
+      router.push("/");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  }, [session?.status]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
