@@ -81,8 +81,8 @@ export default function RegisterPage() {
     }
   };
 
-  const handleSocialLogin = () => {
-    console.log("trying to log in with google");
+  const handleSocialLogin = async (providerName) => {
+    signIn(providerName);
   };
 
   useEffect(() => {
@@ -111,13 +111,25 @@ export default function RegisterPage() {
             collections, track orders, and personalize your online store
             experience.
           </p>
-          <Image src="/shop_img3.png" alt="Characters" className="w-96" />
+          <Image
+            src="/shop_img3.png"
+            alt="Characters"
+            width={384}
+            height={384}
+            className="w-96"
+          />
         </div>
 
         {/* Right Section */}
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <div className="text-center">
-            <Image src="/synthera_logo.png" width={80} className="mx-auto w-44" alt="logo" />
+            <Image
+              src="/synthera_logo.png"
+              width={176}
+              height={44}
+              className="mx-auto w-44"
+              alt="logo"
+            />
             <div className="mt-2 space-y-2">
               <h3 className="text-2xl font-bold sm:text-3xl text-black">
                 Create Your Account
@@ -175,10 +187,10 @@ export default function RegisterPage() {
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
 
-          <div className="flex">
+          <div className="flex ">
             <button
               onClick={() => {
-                handleSocialLogin();
+                handleSocialLogin("google");
               }}
               className="flex-1 cursor-pointer flex text-black items-center justify-center p-3 border-2 border-[#1E40AF] rounded-lg shadow-sm hover:bg-[#E0E7FF] hover:border-[#1C3A9B] transition duration-300"
             >

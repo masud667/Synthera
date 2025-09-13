@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const session = useSession();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,6 +46,23 @@ export default function LoginPage() {
     }
   };
 
+  const handleSocialLogin = async (providerName) => {
+    signIn(providerName);
+  };
+
+  useEffect(() => {
+    if (session?.status == "authenticated") {
+      router.push("/");
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  }, [session?.status]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white rounded-2xl shadow-lg flex max-w-5xl w-full overflow-hidden">
@@ -58,13 +76,25 @@ export default function LoginPage() {
             collections, manage orders, and explore personalized analytics.
           </p>
 
-          <Image src="/shop_img3.png" alt="Characters" className="w-96" />
+          <Image
+            src="/shop_img3.png"
+            alt="Characters"
+            width={384}
+            height={384}
+            className="w-96"
+          />
         </div>
 
         {/* Right Section */}
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <div className="text-center">
-            <Image src="/synthera_logo.png" width={80} className="mx-auto w-44" alt="logo" />
+            <Image
+              src="/synthera_logo.png"
+              width={176}
+              height={44}
+              className="mx-auto w-44"
+              alt="logo"
+            />
             <div className="mt-2 space-y-2">
               <h3 className="text-2xl font-bold sm:text-3xl text-black">
                 Welcome Back

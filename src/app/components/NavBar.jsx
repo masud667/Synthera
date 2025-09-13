@@ -18,7 +18,11 @@ const NavBar = () => {
     { name: "Products", href: "/Products" },
     { name: "Dashboard", href: "/dashboard" },
     { name: "Synthera AI", href: "#" },
+    
   ];
+    if (session) {
+    navItems.push({ name: "Become Seller", href: "/become-seller" });
+  }
 
   const isActive = (href) => pathname === href;
 
