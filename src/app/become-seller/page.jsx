@@ -95,7 +95,7 @@ export default function BecomeSeller() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="max-w-5xl mx-auto p-12">
       {/* Header */}
       <div className="text-center space-y-3 mb-10">
         <span className="font-semibold p-3 rounded-3xl bg-[#EEF2FF] text-[#7051E6]">

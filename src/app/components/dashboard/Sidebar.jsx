@@ -54,13 +54,13 @@ export default function Sidebar({ role, activeRoute, setActiveRoute }) {
   return (
     <>
       {/* Mobile Header */}
-      <div className="md:hidden text-[#1b4c8b]  flex justify-between items-center absolute">
+      <div className="md:hidden text- bg-[#2a67b6] rounded-full p-1  flex justify-between items-center absolute top-[5rem]">
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open Menu"
           className=" cursor-pointer"
         >
-          <FaArrowRight size={20} />
+          <FaArrowRight size={20} className="text-white"/>
         </button>
       </div>
 

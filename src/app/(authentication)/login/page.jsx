@@ -3,8 +3,8 @@
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import logo from "../../assets/synthera_logo.png";
-import shopImg from "../../assets/shop_img3.png";
+// import logo from "../../assets/synthera_logo.png";
+// import shopImg from "../../assets/shop_img3.png";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-   const session = useSession();
+  const session = useSession();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,8 +45,8 @@ export default function LoginPage() {
       router.push("/");
     }
   };
-  
-   const handleSocialLogin = async (providerName) => {
+
+  const handleSocialLogin = async (providerName) => {
     signIn(providerName);
   };
 
@@ -76,13 +76,25 @@ export default function LoginPage() {
             collections, manage orders, and explore personalized analytics.
           </p>
 
-          <Image src={shopImg} alt="Characters" className="w-96" />
+          <Image
+            src="/shop_img3.png"
+            alt="Characters"
+            width={384}
+            height={384}
+            className="w-96"
+          />
         </div>
 
         {/* Right Section */}
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <div className="text-center">
-            <Image src={logo} width={80} className="mx-auto w-44" alt="logo" />
+            <Image
+              src="/synthera_logo.png"
+              width={176}
+              height={44}
+              className="mx-auto w-44"
+              alt="logo"
+            />
             <div className="mt-2 space-y-2">
               <h3 className="text-2xl font-bold sm:text-3xl text-black">
                 Welcome Back

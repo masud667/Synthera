@@ -25,8 +25,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`}>
+    <html lang="en">
+      <body
+        className={`${inter.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <NextAuthProvider>
           <ReactQueryProvider>
             <ClientProviders>{children}</ClientProviders>
